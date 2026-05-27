@@ -24,3 +24,9 @@ The marketplace manifest exposes `example-plugin` as an available Productivity
 plugin. The plugin currently contains presentation metadata only; add skills,
 apps, or MCP server configuration under `plugins/example-plugin/` as its
 functionality grows.
+
+## Private Org Distribution
+
+For teams that are not on Codex Enterprise, see
+[Private GitHub Org Plugin Marketplaces For Codex](./PRIVATE_ORG_PLUGIN_MARKETPLACE_GUIDE.md)
+for a private-repository distribution pattern.
