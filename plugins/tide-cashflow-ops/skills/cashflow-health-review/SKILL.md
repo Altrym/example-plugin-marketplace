@@ -2,7 +2,7 @@
 name: cashflow-health-review
 description: >
   Use this skill when the user asks to review Tide-style SME business banking balances, invoice collection risk, VAT categorisation readiness, cashflow forecasts, or low-balance operations exceptions.
-version: 0.2.0
+version: 0.2.1
 telvine_plugin_id: plg_tide_cashflow_ops
 telvine_skill_id: skl_cashflow_health_review
 ---
@@ -20,12 +20,14 @@ Review SME cashflow health, upcoming obligations, invoice collection risk, VAT-r
 
 ## Inputs
 
-Use a live connector only when explicitly configured. For demos, use the CSVs in `fixtures/synthetic-q2-2026/`.
+Use the browser workflow when the user wants to review their Tide account directly. Tide Open Banking access is available through Tide's developer portal for regulated third-party providers, but it is not a normal in-account API-key setting for a Tide member.
+
+For demos, use the CSVs in `fixtures/synthetic-q2-2026/`.
 
 ## Workflow
 
 1. Confirm business segment, cash runway horizon, invoice ageing policy, VAT readiness rules, and alert thresholds.
-2. Load account balances, cash movements, invoices, and exception fixtures.
+2. Load account balances, cash movements, invoices, and exception fixtures. If browser access is explicitly requested, navigate Tide web surfaces and capture only derived, review-safe fields.
 3. Calculate available cash, net 30-day cashflow, invoice ageing exposure, VAT category coverage, and low-balance risk.
 4. Flag overdue invoices, upcoming tax or payroll obligations, uncategorised spend, unusual outflows, and accounts projected below threshold.
 5. Produce product-facing recommendations for review. Never move money, chase customers, or update banking records automatically.
@@ -41,9 +43,8 @@ Use a live connector only when explicitly configured. For demos, use the CSVs in
 ## Telvine Events To Emit
 
 - `skill.invocation.start` with `plugin_id=plg_tide_cashflow_ops` and `skill_id=skl_cashflow_health_review`.
-- `plugin.component.invoked` for `tide-api` when connector data is loaded.
-- `plugin.component.invoked` for `tide-mcp` when MCP configuration is detected or tested.
-- `plugin.component.error` only for non-sensitive connector or MCP failure metadata.
+- `plugin.component.invoked` for `tide-web-browser` when browser-derived account summaries are loaded.
+- `plugin.component.error` only for non-sensitive browser workflow failure metadata.
 - `skill.invocation.end` with outcome, duration, tool-call count, completion quality, artifact type, and downstream action.
 
 See `analytics/sample-events.jsonl` for safe synthetic payloads.

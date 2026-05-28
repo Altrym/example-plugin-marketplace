@@ -3,7 +3,7 @@
   "name": "tide-cashflow-ops",
   "display_name": "Tide Cashflow Ops Plugin",
   "owner": "Altrym",
-  "version": "0.2.0",
+  "version": "0.2.1",
   "target_customer": "Tide PM - Business Banking / Cashflow",
   "workflow_hook": "SME balances, invoices, cashflow risk, and banking operations exceptions",
   "source": "custom/tide-plugin-request",
@@ -18,14 +18,14 @@
       "skill_id": "skl_cashflow_health_review"
     },
     {
-      "component_type": "connector",
-      "name": "tide-api",
+      "component_type": "browser_workflow",
+      "name": "tide-web-browser",
       "telemetry_mode": "component_events"
     },
     {
-      "component_type": "mcp_config",
-      "name": "tide-mcp",
-      "telemetry_mode": "component_events"
+      "component_type": "open_banking_reference",
+      "name": "tide-open-banking",
+      "telemetry_mode": "declaration_only"
     },
     {
       "component_type": "asset",
@@ -41,6 +41,7 @@
   "telemetry_policy": {
     "pii": "do_not_send",
     "connector_payloads": "do_not_send",
+    "browser_captures": "do_not_send",
     "sample_data": "synthetic_only",
     "event_files": [
       "analytics/sample-events.jsonl",
