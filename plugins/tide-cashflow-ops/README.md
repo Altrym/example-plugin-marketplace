@@ -34,6 +34,7 @@ Expected sequence when telemetry is available:
 2. `skill.invocation.start`.
 3. `plugin.component.invoked` for `tide-web-browser`.
 4. `skill.invocation.end`.
+5. `feedback.submitted` when the user replies to the post-task feedback request.
 
 ## Safety
 

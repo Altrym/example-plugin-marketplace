@@ -2,7 +2,7 @@
 name: cashflow-health-review
 description: >
   Use this skill when the user asks to review Tide-style SME business banking balances, invoice collection risk, VAT categorisation readiness, cashflow forecasts, or low-balance operations exceptions.
-version: 0.3.3
+version: 0.3.4
 telvine_plugin_id: plg_yxZaBuCDr68V5R5u
 telvine_skill_id: skl_jfQK6gsd3JnsiNA3
 ---
@@ -50,6 +50,7 @@ Before review work, run `scripts/emit-telvine-event.mjs`. The helper reuses an e
 - At the end, emit `skill.invocation.end`.
 - If telemetry is unavailable, continue the user task without surfacing telemetry setup details.
 - If the review uses a live Tide account, keep events metadata-only and do not include account-derived values.
+- After the final user-visible review is complete, ask: "Was this Tide cashflow review useful? Reply with a 1-5 rating and an optional short note. Do not include private account details." If the user provides a rating or note, emit `feedback.submitted` with only `rating`, `comment`, and `task_category`.
 
 ## Workflow
 
@@ -60,6 +61,7 @@ Before review work, run `scripts/emit-telvine-event.mjs`. The helper reuses an e
 5. Calculate available cash, net 30-day cashflow, invoice ageing exposure, VAT category coverage, and low-balance risk from visible browser information.
 6. Flag overdue invoices, upcoming tax or payroll obligations, uncategorised spend, unusual outflows, and accounts projected below threshold.
 7. Produce review-ready recommendations. Never move money, chase customers, or update banking records automatically.
+8. Ask for feedback after the completed review. If the user replies, send it through `scripts/emit-telvine-event.mjs` as `feedback.submitted`; do not include balances, transaction text, company names, browser data, prompts, or model output in the feedback event.
 
 ## Expected Output
 
@@ -68,6 +70,7 @@ Before review work, run `scripts/emit-telvine-event.mjs`. The helper reuses an e
 - Invoice collection risk ranking
 - VAT and category readiness checklist
 - Product insight notes for onboarding, alerts, and workflow gaps
+- A short feedback request after the task is complete
 
 ## Telvine Events To Emit
 
@@ -76,3 +79,4 @@ Before review work, run `scripts/emit-telvine-event.mjs`. The helper reuses an e
 - `plugin.component.invoked` for `tide-web-browser` when browser-derived account summaries are loaded.
 - `plugin.component.error` only for non-sensitive browser workflow failure metadata.
 - `skill.invocation.end` with outcome, duration, tool-call count, completion quality, artifact type, and downstream action.
+- `feedback.submitted` after the user responds to the feedback request. Include `rating` when the user gives a 1-5 score, `comment` when they provide a short note, and `task_category="analysis"`.

@@ -29,4 +29,6 @@ If the user says "my account", "our Tide", "real account", or offers to authenti
 
 Emit `plugin.component.invoked` when browser-derived summaries are loaded and `plugin.component.error` for non-sensitive workflow failures. The telemetry helper provisions and reuses an installation-bound Telvine runtime write key when no env key is configured. If provisioning is unavailable, skip telemetry silently and continue the user task.
 
+After a completed Tide review, ask the user for a 1-5 usefulness rating and optional short note. If they reply, emit `feedback.submitted` through the telemetry helper. Do not include browser-derived values, balances, names, account data, prompts, file contents, or model output in the feedback event.
+
 For live account reviews, do not emit account-derived values. Never emit balances, names, transaction text, invoice details, screenshots, browser DOM payloads, prompts, file contents, bank details, customer identities, connector payloads, tool arguments, model outputs, or retrieved records.

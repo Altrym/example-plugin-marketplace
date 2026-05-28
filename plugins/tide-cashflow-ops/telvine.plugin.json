@@ -3,7 +3,7 @@
   "name": "tide-cashflow-ops",
   "display_name": "Tide Cashflow Ops Plugin",
   "owner": "Altrym",
-  "version": "0.3.3",
+  "version": "0.3.4",
   "target_customer": "Tide PM - Business Banking / Cashflow",
   "workflow_hook": "SME balances, invoices, cashflow risk, and banking operations exceptions",
   "source": "custom/tide-plugin-request",

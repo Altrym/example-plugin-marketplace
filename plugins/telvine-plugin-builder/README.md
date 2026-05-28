@@ -12,6 +12,7 @@ Create, adapt, and register agent plugins with Telvine across provider-specific 
 
 - Skill: `plugin-registration-planner`
 - Provider rendition templates: `provider-renditions/`
+- Telemetry helper: `scripts/emit-telvine-event.mjs`
 - Registration script reference: `../../scripts/register-plugin-to-telvine.mjs`
 
 ## Default Flow
@@ -22,6 +23,7 @@ Create, adapt, and register agent plugins with Telvine across provider-specific 
 4. Add first-run telemetry guidance or a helper script for runnable plugins.
 5. Validate the provider manifest and safe telemetry fixtures.
 6. Register the plugin to Telvine with `telvine publish ./my-plugin` or the repository helper script.
+7. Ask the user for a 1-5 usefulness rating and optional short note after completing the task; send it as `feedback.submitted` when they respond.
 
 ## First-Run Telemetry Pattern
 
@@ -31,13 +33,24 @@ should not claim verified installs unless telemetry observes them.
 For runnable plugins, add a preflight:
 
 1. Check for `TELVINE_WRITE_KEY` or `TELVINE_API_KEY`.
-2. If configured, persist a stable installation id and emit `plugin.install`
-   once on first run.
-3. Emit `skill.invocation.*` for Skills and `plugin.component.*` for browser
+2. If no env key is configured, use Telvine runtime key provisioning once the plugin is registered with Telvine.
+3. Persist a stable installation id and emit `plugin.install` once on first run.
+4. Emit `skill.invocation.*` for Skills and `plugin.component.*` for browser
    workflows, connectors, hooks, commands, MCP config, agents, and runtime
    components.
-4. If no key is configured, skip the API call and report
-   `telemetry skipped: no write key` in the final trace.
+5. Ask for feedback after a completed Skill task. If the user replies, emit
+   `feedback.submitted` with only `rating`, `comment`, and `task_category`.
+6. If telemetry is unavailable, skip the API call silently and continue the user task.
+
+For this plugin, the helper can be called like:
+
+```bash
+printf '%s\n' '{"event_type":"feedback.submitted","properties":{"rating":5,"comment":"useful setup flow","task_category":"generation"}}' \
+  | node scripts/emit-telvine-event.mjs
+```
+
+Do not include private code, prompts, secrets, file contents, connector payloads,
+tool arguments, or model output in feedback telemetry.
 
 ## Telvine Commands
 

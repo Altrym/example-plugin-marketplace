@@ -4,14 +4,16 @@ import { mkdir, readFile, writeFile } from "node:fs/promises";
 import { dirname, join } from "node:path";
 import { homedir } from "node:os";
 
-const PLUGIN_ID = "plg_yxZaBuCDr68V5R5u";
-const SKILL_ID = "skl_jfQK6gsd3JnsiNA3";
-const VERSION = "0.3.4";
+const PLUGIN_SLUG = "telvine-plugin-builder";
+const SKILL_SLUG = "plugin-registration-planner";
+const VERSION = "0.1.2";
 const EVENTS_API = process.env.TELVINE_EVENTS_URL || process.env.TELVINE_API_URL || "https://api.telvine.com/v1/events";
 const RUNTIME_KEY_API = process.env.TELVINE_RUNTIME_KEY_URL || new URL("/v1/runtime/write-key", EVENTS_API).toString();
 const ENV_KEY = process.env.TELVINE_WRITE_KEY || process.env.TELVINE_API_KEY || "";
+const ENV_PLUGIN_ID = process.env.TELVINE_PLUGIN_ID || "";
+const ENV_SKILL_ID = process.env.TELVINE_SKILL_ID || "";
 const DEBUG = process.env.TELVINE_DEBUG_TELEMETRY === "1";
-const PLUGIN_STATE_DIR = join(homedir(), ".telvine", "plugins", "tide-cashflow-ops");
+const PLUGIN_STATE_DIR = join(homedir(), ".telvine", "plugins", PLUGIN_SLUG);
 const INSTALL_FILE = join(PLUGIN_STATE_DIR, "install_id");
 const RUNTIME_KEY_FILE = join(PLUGIN_STATE_DIR, "runtime_key.json");
 
@@ -24,14 +26,11 @@ const forbiddenPropertyKeys = [
   "connector_payload",
   "tool_arguments",
   "model_output",
-  "balance",
-  "balances",
-  "transaction_text",
-  "invoice_details",
-  "company_name",
-  "customer_name",
-  "account_number",
-  "retrieved_records",
+  "generated_code",
+  "secret",
+  "token",
+  "api_key",
+  "private_key",
 ];
 
 const eventTypeDefaults = {
@@ -43,11 +42,12 @@ const eventTypeDefaults = {
   },
   "skill.invocation.start": {
     trigger: "explicit",
+    task_category: "generation",
   },
   "plugin.component.invoked": {
     component_type: "runtime_component",
-    component_name: "tide-web-browser",
-    operation: "loaded",
+    component_name: "telvine-registration-helper",
+    operation: "generated",
   },
   "skill.invocation.end": {
     duration_ms: 0,
@@ -56,15 +56,18 @@ const eventTypeDefaults = {
     outcome: "completed",
     completion_quality: "not_applicable",
     user_visible_output: true,
+    task_category: "generation",
   },
-  "feedback.submitted": {},
+  "feedback.submitted": {
+    task_category: "generation",
+  },
 };
 
 const stdin = await readStdin();
 const input = stdin.trim() ? JSON.parse(stdin) : {};
 const eventType = input.event_type || "plugin.install";
 if (!eventTypeDefaults[eventType] && eventType !== "plugin.component.error" && eventType !== "skill.invocation.error") {
-  throw new Error(`Unsupported event_type for Tide telemetry helper: ${eventType}`);
+  throw new Error(`Unsupported event_type for Telvine Plugin Builder telemetry helper: ${eventType}`);
 }
 
 const properties = {
@@ -74,23 +77,27 @@ const properties = {
 assertMetadataOnly(properties);
 
 const installationId = input.installation_id || await getOrCreateInstallationId();
-const key = ENV_KEY || await getOrCreateRuntimeWriteKey(installationId);
+const runtimeCredential = await getRuntimeCredential(installationId);
+const key = ENV_KEY || runtimeCredential.key;
+const pluginId = input.plugin_id || ENV_PLUGIN_ID || runtimeCredential.pluginId;
+const skillId = input.skill_id || ENV_SKILL_ID || runtimeCredential.skillId;
+
+if (!key || !pluginId || ((eventType.startsWith("skill.") || eventType === "feedback.submitted") && !skillId)) {
+  if (DEBUG) console.error(`telemetry skipped: missing runtime credential (${eventType})`);
+  process.exit(0);
+}
+
 const event = {
   event_type: eventType,
-  plugin_id: PLUGIN_ID,
+  plugin_id: pluginId,
   version: input.version || VERSION,
   installation_id: installationId,
   occurred_at: input.occurred_at || new Date().toISOString(),
   idempotency_key: input.idempotency_key || makeIdempotencyKey(eventType, installationId),
   runtime: input.runtime || process.env.TELVINE_RUNTIME || "codex-app",
   properties,
-  ...(eventType.startsWith("skill.") || eventType === "feedback.submitted" ? { skill_id: SKILL_ID } : {}),
+  ...(eventType.startsWith("skill.") || eventType === "feedback.submitted" ? { skill_id: skillId } : {}),
 };
-
-if (!key) {
-  if (DEBUG) console.error(`telemetry skipped: no runtime write key (${event.event_type})`);
-  process.exit(0);
-}
 
 const response = await fetch(EVENTS_API, {
   method: "POST",
@@ -127,8 +134,10 @@ async function getOrCreateInstallationId() {
   return id;
 }
 
-async function getOrCreateRuntimeWriteKey(installationId) {
-  const cached = await readCachedRuntimeKey(installationId);
+async function getRuntimeCredential(installationId) {
+  if (ENV_KEY) return { key: ENV_KEY, pluginId: ENV_PLUGIN_ID, skillId: ENV_SKILL_ID };
+
+  const cached = await readCachedRuntimeCredential(installationId);
   if (cached) return cached;
 
   try {
@@ -136,8 +145,8 @@ async function getOrCreateRuntimeWriteKey(installationId) {
       method: "POST",
       headers: { "content-type": "application/json" },
       body: JSON.stringify({
-        plugin_id: PLUGIN_ID,
-        skill_id: SKILL_ID,
+        plugin_slug: PLUGIN_SLUG,
+        skill_slug: SKILL_SLUG,
         installation_id: installationId,
         runtime: process.env.TELVINE_RUNTIME || "codex-app",
         runtime_version: process.env.TELVINE_RUNTIME_VERSION,
@@ -145,44 +154,58 @@ async function getOrCreateRuntimeWriteKey(installationId) {
     });
     if (!response.ok) {
       if (DEBUG) console.error(`telemetry key provisioning failed: ${response.status}`);
-      return "";
+      return { key: "", pluginId: "", skillId: "" };
     }
 
     const body = await response.json();
-    if (!body?.key || typeof body.key !== "string") {
-      if (DEBUG) console.error("telemetry key provisioning failed: missing key");
-      return "";
+    if (!body?.key || !body?.plugin_id || !body?.skill_id) {
+      if (DEBUG) console.error("telemetry key provisioning failed: missing credential fields");
+      return { key: "", pluginId: "", skillId: "" };
     }
-    await writeCachedRuntimeKey(installationId, body.key, body.expires_at);
+    const credential = {
+      key: body.key,
+      pluginId: body.plugin_id,
+      skillId: body.skill_id,
+      expiresAt: body.expires_at || null,
+    };
+    await writeCachedRuntimeCredential(installationId, credential);
     if (DEBUG) console.error("telemetry runtime write key provisioned");
-    return body.key;
+    return credential;
   } catch (error) {
     if (DEBUG) console.error(`telemetry key provisioning failed: ${error instanceof Error ? error.message : String(error)}`);
-    return "";
+    return { key: "", pluginId: "", skillId: "" };
   }
 }
 
-async function readCachedRuntimeKey(installationId) {
+async function readCachedRuntimeCredential(installationId) {
   try {
     const payload = JSON.parse(await readFile(RUNTIME_KEY_FILE, "utf8"));
-    if (payload.plugin_id !== PLUGIN_ID || payload.installation_id !== installationId || !payload.key) return "";
-    if (payload.expires_at && new Date(payload.expires_at).getTime() - Date.now() < 60 * 60 * 1000) return "";
-    return decryptRuntimeKey(payload.key, installationId);
+    if (payload.plugin_slug !== PLUGIN_SLUG || payload.installation_id !== installationId || !payload.key) return null;
+    if (payload.expires_at && new Date(payload.expires_at).getTime() - Date.now() < 60 * 60 * 1000) return null;
+    return {
+      key: decryptRuntimeKey(payload.key, installationId),
+      pluginId: payload.plugin_id || "",
+      skillId: payload.skill_id || "",
+      expiresAt: payload.expires_at || null,
+    };
   } catch {
-    return "";
+    return null;
   }
 }
 
-async function writeCachedRuntimeKey(installationId, key, expiresAt) {
+async function writeCachedRuntimeCredential(installationId, credential) {
   await mkdir(dirname(RUNTIME_KEY_FILE), { recursive: true });
   await writeFile(
     RUNTIME_KEY_FILE,
     `${JSON.stringify(
       {
-        plugin_id: PLUGIN_ID,
+        plugin_slug: PLUGIN_SLUG,
+        plugin_id: credential.pluginId,
+        skill_slug: SKILL_SLUG,
+        skill_id: credential.skillId,
         installation_id: installationId,
-        expires_at: expiresAt || null,
-        key: encryptRuntimeKey(key, installationId),
+        expires_at: credential.expiresAt || null,
+        key: encryptRuntimeKey(credential.key, installationId),
       },
       null,
       2,
@@ -218,14 +241,14 @@ function decryptRuntimeKey(payload, installationId) {
 
 function runtimeKeyEncryptionKey(installationId) {
   return createHash("sha256")
-    .update(`${PLUGIN_ID}:${installationId}:${homedir()}`)
+    .update(`${PLUGIN_SLUG}:${installationId}:${homedir()}`)
     .digest();
 }
 
 function makeIdempotencyKey(eventType, installationId) {
   const bucket = eventType === "plugin.install" ? "once" : new Date().toISOString();
   return createHash("sha256")
-    .update(`${PLUGIN_ID}:${VERSION}:${installationId}:${eventType}:${bucket}`)
+    .update(`${PLUGIN_SLUG}:${VERSION}:${installationId}:${eventType}:${bucket}`)
     .digest("hex");
 }
 
@@ -239,7 +262,7 @@ function assertMetadataOnly(value, path = "properties") {
   for (const [key, nested] of Object.entries(value)) {
     const normalized = key.toLowerCase();
     if (forbiddenPropertyKeys.some((blocked) => normalized.includes(blocked))) {
-      throw new Error(`Refusing live-data telemetry key: ${path}.${key}`);
+      throw new Error(`Refusing unsafe telemetry key: ${path}.${key}`);
     }
     assertMetadataOnly(nested, `${path}.${key}`);
   }

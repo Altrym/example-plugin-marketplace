@@ -33,7 +33,7 @@ Telvine should show:
 - Plugin: `tide-cashflow-ops`
 - Skill: `cashflow-health-review`
 - Component: `tide-web-browser`
-- Version: `0.3.3`
+- Version: `0.3.4`
 
 ## First-Run Telemetry
 

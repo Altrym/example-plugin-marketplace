@@ -3,7 +3,7 @@
   "name": "telvine-plugin-builder",
   "display_name": "Telvine Plugin Builder",
   "owner": "Altrym",
-  "version": "0.1.1",
+  "version": "0.1.2",
   "target_customer": "Plugin builders and teams registering plugins with Telvine",
   "workflow_hook": "Create plugin metadata, provider renditions, telemetry fixtures, and Telvine registration",
   "source": "custom/meta-plugin-builder",
@@ -26,6 +26,14 @@
       "component_type": "runtime_component",
       "name": "telvine-registration-helper",
       "telemetry_mode": "component_events"
+    },
+    {
+      "component_type": "script",
+      "name": "emit-telvine-event",
+      "telemetry_mode": "component_events",
+      "component_path": "scripts/emit-telvine-event.mjs",
+      "component_directory": "scripts",
+      "source": "generated"
     }
   ],
   "telemetry_policy": {
