@@ -1,15 +1,16 @@
 {
   "plugin_id": "plg_ramp_expense_ops",
   "plugin_name": "Ramp Expense Ops Plugin",
-  "version": "0.1.0",
+  "version": "0.2.0",
+  "previous_version": "0.1.0",
   "synthetic_period": "2026-Q2",
   "generated_for": "Ramp PM - Accounting Automation / Expense",
   "metrics": {
-    "installs": 148,
-    "invocations": 642,
-    "error_rate": 0.031,
-    "p95_duration_ms": 18320,
-    "completion_rate": 0.86,
+    "installs": 184,
+    "invocations": 811,
+    "error_rate": 0.014,
+    "p95_duration_ms": 12480,
+    "completion_rate": 0.93,
     "declared_components_by_type": {
       "skill": 1,
       "connector": 1,
@@ -20,44 +21,58 @@
     "observed_components_by_type": {
       "skill": 1,
       "connector": 1,
-      "mcp_config": 1
+      "mcp_config": 1,
+      "asset": 1
     }
+  },
+  "version_comparison": {
+    "installs": 36,
+    "invocations": 169,
+    "completion_rate_points": 7,
+    "error_rate_points": -1.7,
+    "p95_duration_ms": -5840,
+    "review_exceptions": -2,
+    "auto_decision_rate_points": 26
   },
   "activation_funnel": [
     {
       "step": "installed",
-      "count": 148
+      "count": 184
     },
     {
       "step": "configured_connector",
-      "count": 112
+      "count": 151
     },
     {
       "step": "first_successful_run",
-      "count": 84
+      "count": 125
+    },
+    {
+      "step": "updated_from_0.1.0",
+      "count": 83
     },
     {
       "step": "second_week_retained",
-      "count": 67
+      "count": 94
     }
   ],
   "outcome_breakdown": [
     {
       "outcome": "completed",
-      "count": 552
+      "count": 754
     },
     {
       "outcome": "partial",
-      "count": 51
+      "count": 36
     },
     {
       "outcome": "blocked",
-      "count": 26
+      "count": 15
     },
     {
       "outcome": "escalated",
-      "count": 13
+      "count": 7
     }
   ],
-  "notes": "All values are synthetic demo analytics for product and outreach conversations."
+  "notes": "All values are synthetic demo analytics for product and outreach conversations. No prompts, file contents, connector payloads, tool arguments, or model outputs are included."
 }

@@ -1,0 +1,56 @@
+{
+  "plugin_id": "plg_ramp_expense_ops",
+  "plugin_name": "Ramp Expense Ops Plugin",
+  "synthetic_period": "2026-Q2",
+  "target_customer": "Ramp PM - Accounting Automation / Expense",
+  "versions": [
+    {
+      "version": "0.1.0",
+      "fixture_path": "fixtures/synthetic-q2-2026/v0.1.0",
+      "analytics_file": "analytics/sample-events-v0.1.0.jsonl",
+      "metrics": {
+        "installs": 148,
+        "invocations": 642,
+        "completion_rate": 0.86,
+        "error_rate": 0.031,
+        "p95_duration_ms": 18320,
+        "review_exceptions": 6,
+        "auto_decision_rate": 0.42
+      },
+      "product_notes": [
+        "Baseline synthetic account shape",
+        "Higher manual review volume",
+        "Partial reference-load telemetry"
+      ]
+    },
+    {
+      "version": "0.2.0",
+      "fixture_path": "fixtures/synthetic-q2-2026/v0.2.0",
+      "analytics_file": "analytics/sample-events-v0.2.0.jsonl",
+      "metrics": {
+        "installs": 184,
+        "invocations": 811,
+        "completion_rate": 0.93,
+        "error_rate": 0.014,
+        "p95_duration_ms": 12480,
+        "review_exceptions": 4,
+        "auto_decision_rate": 0.68
+      },
+      "product_notes": [
+        "Richer rules and fixture coverage",
+        "Lower exception count and faster p95",
+        "Version-update telemetry for marketplace comparison"
+      ]
+    }
+  ],
+  "deltas": {
+    "installs": 36,
+    "invocations": 169,
+    "completion_rate_points": 7,
+    "error_rate_points": -1.7,
+    "p95_duration_ms": -5840,
+    "review_exceptions": -2,
+    "auto_decision_rate_points": 26
+  },
+  "readout": "Synthetic data shows v0.2.0 improving completion quality, reducing manual review, and producing enough version-update telemetry to compare plugin releases in Telvine."
+}

@@ -3,7 +3,7 @@
   "name": "brex-spend-controls",
   "display_name": "Brex Spend Controls Plugin",
   "owner": "Altrym",
-  "version": "0.1.0",
+  "version": "0.2.0",
   "target_customer": "Brex PM - Expense Management / Spend Controls",
   "workflow_hook": "Spend policy, card limits, and reimbursement controls",
   "source": "gtm/target_plugin_examples.json",
@@ -44,7 +44,10 @@
     "sample_data": "synthetic_only",
     "event_files": [
       "analytics/sample-events.jsonl",
-      "analytics/dashboard-summary.json"
+      "analytics/sample-events-v0.1.0.jsonl",
+      "analytics/sample-events-v0.2.0.jsonl",
+      "analytics/dashboard-summary.json",
+      "analytics/version-comparison.json"
     ]
   }
 }

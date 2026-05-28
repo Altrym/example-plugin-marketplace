@@ -1,15 +1,16 @@
 {
   "plugin_id": "plg_brex_spend_ops",
   "plugin_name": "Brex Spend Controls Plugin",
-  "version": "0.1.0",
+  "version": "0.2.0",
+  "previous_version": "0.1.0",
   "synthetic_period": "2026-Q2",
   "generated_for": "Brex PM - Expense Management / Spend Controls",
   "metrics": {
-    "installs": 121,
-    "invocations": 513,
-    "error_rate": 0.024,
-    "p95_duration_ms": 16940,
-    "completion_rate": 0.89,
+    "installs": 159,
+    "invocations": 688,
+    "error_rate": 0.012,
+    "p95_duration_ms": 11870,
+    "completion_rate": 0.94,
     "declared_components_by_type": {
       "skill": 1,
       "connector": 1,
@@ -20,44 +21,58 @@
     "observed_components_by_type": {
       "skill": 1,
       "connector": 1,
-      "mcp_config": 1
+      "mcp_config": 1,
+      "asset": 1
     }
+  },
+  "version_comparison": {
+    "installs": 38,
+    "invocations": 175,
+    "completion_rate_points": 5,
+    "error_rate_points": -1.2,
+    "p95_duration_ms": -5070,
+    "review_exceptions": -2,
+    "auto_decision_rate_points": 24
   },
   "activation_funnel": [
     {
       "step": "installed",
-      "count": 121
+      "count": 159
     },
     {
       "step": "configured_connector",
-      "count": 96
+      "count": 130
     },
     {
       "step": "first_successful_run",
-      "count": 75
+      "count": 108
+    },
+    {
+      "step": "updated_from_0.1.0",
+      "count": 68
     },
     {
       "step": "second_week_retained",
-      "count": 58
+      "count": 81
     }
   ],
   "outcome_breakdown": [
     {
       "outcome": "completed",
-      "count": 457
+      "count": 647
     },
     {
       "outcome": "partial",
-      "count": 41
+      "count": 31
     },
     {
       "outcome": "blocked",
-      "count": 21
+      "count": 12
     },
     {
       "outcome": "escalated",
-      "count": 10
+      "count": 6
     }
   ],
-  "notes": "All values are synthetic demo analytics for product and outreach conversations."
+  "notes": "All values are synthetic demo analytics for product and outreach conversations. No prompts, file contents, connector payloads, tool arguments, or model outputs are included."
 }

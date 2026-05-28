@@ -1,0 +1,6 @@
+exception_id,request_id,severity,reason,proposed_action,owner,expected_resolution_hours
+exc_01,req_2001,high,Single subscription charge exceeds card single-transaction limit,Route to VP approval or split annual contract approval,Sales Finance,24
+exc_02,req_2003,medium,Advertising spend is pending approval and near monthly limit,Hold until campaign owner approval,Marketing Ops,18
+exc_03,req_2004,low,Supplies request exceeds ops single-transaction limit by 180,Approve exception or move to procurement card,Operations,12
+exc_04,req_2005,medium,Travel charge exceeds single-transaction limit,Request trip justification and manager approval,Sales Ops,24
+exc_05,req_2006,high,Event spend exceeds people policy limit and remains pending,Escalate to People leadership,People Ops,36

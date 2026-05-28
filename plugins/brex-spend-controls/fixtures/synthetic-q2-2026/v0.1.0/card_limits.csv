@@ -1,0 +1,7 @@
+card_id,owner,department,monthly_limit,single_transaction_limit,policy_group,approval_chain,effective_version
+card_sales_01,Grace Lee,Sales,15000.00,10000.00,sales_standard,manager_then_finance,0.1.0
+card_sales_02,Lena Shah,Sales,5000.00,2500.00,sales_standard,manager,0.1.0
+card_eng_03,Owen Diaz,Engineering,8000.00,5000.00,engineering_tools,manager_then_finance,0.1.0
+card_mkt_02,Ivy Nguyen,Marketing,12000.00,7500.00,marketing_ads,budget_owner_then_finance,0.1.0
+card_ops_01,Ben Carter,Operations,3000.00,1000.00,ops_standard,manager,0.1.0
+card_people_01,Max Lewis,People,5000.00,2500.00,people_events,people_lead,0.1.0

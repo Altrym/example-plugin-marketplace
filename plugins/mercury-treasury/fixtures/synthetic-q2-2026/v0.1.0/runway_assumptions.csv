@@ -1,0 +1,6 @@
+metric,value,unit,notes,effective_version
+average_monthly_burn,415000,USD,Trailing three month normalized burn,0.1.0
+minimum_operating_cash,250000,USD,Board policy,0.1.0
+reserve_target_months,4,months,Treasury policy,0.1.0
+next_payroll,180000,USD,Due 2026-05-05,0.1.0
+expected_receipts_30d,265000,USD,Signed invoices expected within 30 days,0.1.0

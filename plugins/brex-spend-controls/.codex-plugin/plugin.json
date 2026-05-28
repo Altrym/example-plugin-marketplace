@@ -1,6 +1,6 @@
 {
   "name": "brex-spend-controls",
-  "version": "0.1.0",
+  "version": "0.2.0",
   "description": "Review spend controls, card limits, and reimbursement policy exceptions.",
   "author": {
     "name": "Altrym",

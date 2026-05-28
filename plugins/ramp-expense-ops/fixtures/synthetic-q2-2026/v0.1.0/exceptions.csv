@@ -1,0 +1,7 @@
+exception_id,transaction_id,severity,reason,proposed_action,owner,expected_resolution_hours
+exc_01,txn_1003,high,Missing receipt and advertising charge exceeds standard approval limit,Request receipt and campaign approval,Marketing Ops,48
+exc_02,txn_1004,medium,Meal exceeds per-person policy threshold,Request attendee list and approval,Finance Ops,24
+exc_03,txn_1006,high,Merchant should map to Software GL 6120 not suspense/misc 6999,Recode GL from 6999 to 6120,Engineering Finance,8
+exc_04,txn_1007,medium,Missing hotel receipt before month-end close,Request folio receipt,Sales Ops,36
+exc_05,txn_1002,low,AWS vendor mapped as Software instead of Cloud Infrastructure,Confirm category treatment,Engineering Finance,12
+exc_06,txn_1009,low,New software vendor needs approval evidence,Attach manager approval,Marketing Ops,24

@@ -1,15 +1,16 @@
 {
   "plugin_id": "plg_mercury_treasury",
   "plugin_name": "Mercury Treasury Plugin",
-  "version": "0.1.0",
+  "version": "0.2.0",
+  "previous_version": "0.1.0",
   "synthetic_period": "2026-Q2",
   "generated_for": "Mercury PM - Banking / Cash & Treasury",
   "metrics": {
-    "installs": 103,
-    "invocations": 447,
-    "error_rate": 0.018,
-    "p95_duration_ms": 14210,
-    "completion_rate": 0.91,
+    "installs": 137,
+    "invocations": 604,
+    "error_rate": 0.009,
+    "p95_duration_ms": 10140,
+    "completion_rate": 0.96,
     "declared_components_by_type": {
       "skill": 1,
       "connector": 1,
@@ -20,44 +21,58 @@
     "observed_components_by_type": {
       "skill": 1,
       "connector": 1,
-      "mcp_config": 1
+      "mcp_config": 1,
+      "asset": 1
     }
+  },
+  "version_comparison": {
+    "installs": 34,
+    "invocations": 157,
+    "completion_rate_points": 5,
+    "error_rate_points": -0.9,
+    "p95_duration_ms": -4070,
+    "review_exceptions": -1,
+    "auto_decision_rate_points": 23
   },
   "activation_funnel": [
     {
       "step": "installed",
-      "count": 103
+      "count": 137
     },
     {
       "step": "configured_connector",
-      "count": 86
+      "count": 112
     },
     {
       "step": "first_successful_run",
-      "count": 71
+      "count": 93
+    },
+    {
+      "step": "updated_from_0.1.0",
+      "count": 58
     },
     {
       "step": "second_week_retained",
-      "count": 55
+      "count": 70
     }
   ],
   "outcome_breakdown": [
     {
       "outcome": "completed",
-      "count": 407
+      "count": 580
     },
     {
       "outcome": "partial",
-      "count": 36
+      "count": 27
     },
     {
       "outcome": "blocked",
-      "count": 18
+      "count": 11
     },
     {
       "outcome": "escalated",
-      "count": 9
+      "count": 5
     }
   ],
-  "notes": "All values are synthetic demo analytics for product and outreach conversations."
+  "notes": "All values are synthetic demo analytics for product and outreach conversations. No prompts, file contents, connector payloads, tool arguments, or model outputs are included."
 }

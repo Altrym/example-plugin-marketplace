@@ -1,0 +1,7 @@
+rule_id,merchant_pattern,expected_category,expected_gl_code,max_amount,requires_receipt,auto_action,effective_version
+rule_01,AWS,Cloud Infrastructure,6120,5000.00,true,review,0.1.0
+rule_02,OpenAI,Software,6120,3000.00,true,review,0.1.0
+rule_03,LinkedIn Ads,Advertising,6400,2500.00,true,manual_review,0.1.0
+rule_04,Bistro,Meals,6510,150.00,true,manual_review,0.1.0
+rule_05,Marriott,Lodging,6500,2000.00,true,request_receipt,0.1.0
+rule_06,FedEx,Shipping,6250,500.00,false,auto_code,0.1.0

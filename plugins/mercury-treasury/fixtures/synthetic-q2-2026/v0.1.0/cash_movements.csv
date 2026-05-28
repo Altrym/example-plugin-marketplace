@@ -1,0 +1,8 @@
+movement_id,date,account_id,counterparty,amount,status,category,matched_rule
+mov_3001,2026-04-01,acct_3001,Stripe,184250.00,posted,customer_receipts,known_receipts
+mov_3002,2026-04-03,acct_3001,AWS,-46200.00,posted,cloud_infrastructure,known_vendor
+mov_3003,2026-04-06,acct_3002,Gusto Payroll,-176400.00,posted,payroll,payroll_buffer
+mov_3004,2026-04-10,acct_3001,Treasury Reserve,-500000.00,pending,internal_transfer,manual_pair
+mov_3005,2026-04-15,acct_3003,Operating Checking,500000.00,pending,internal_transfer,manual_pair
+mov_3006,2026-04-18,acct_3001,Vendor ACH Batch,-93500.00,posted,ap_batch,known_vendor_batch
+mov_3007,2026-04-22,acct_3001,Unknown Wire,-74000.00,review,unclassified_outflow,none

@@ -5,6 +5,10 @@ operations demos. Each plugin packages a focused `SKILL.md`, connector and MCP
 component inventory, Telvine analytics fixtures, and dummy data for offline
 walkthroughs.
 
+Each target plugin includes two synthetic fixture snapshots, `v0.1.0` and
+`v0.2.0`, so teams can compare plugin-version behavior, completion quality,
+exception volume, and Telvine telemetry side by side.
+
 ## Install The Marketplace
 
 ```bash
@@ -30,6 +34,8 @@ plugins/<plugin>/.codex-plugin/plugin.json
 plugins/<plugin>/skills/<skill>/SKILL.md
 plugins/<plugin>/analytics/
 plugins/<plugin>/fixtures/synthetic-q2-2026/
+plugins/<plugin>/fixtures/synthetic-q2-2026/v0.1.0/
+plugins/<plugin>/fixtures/synthetic-q2-2026/v0.2.0/
 ```
 
 The marketplace manifest exposes the first three GTM target-customer plugins as
