@@ -1,6 +1,6 @@
 # Tide Cashflow Ops Plugin
 
-Review SME cashflow health, invoice collection risk, VAT-ready categorisation, and banking operations exceptions for Tide-style business banking teams.
+Review SME cashflow health, invoice collection risk, VAT-ready categorisation, and banking operations exceptions through the Tide browser experience.
 
 ## Target Customer
 
@@ -11,17 +11,15 @@ Review SME cashflow health, invoice collection risk, VAT-ready categorisation, a
 ## Components
 
 - Skill: `cashflow-health-review`
-- Browser workflow fixture: `tide-web-browser`
-- Analytics fixtures: `analytics/`
-- Dummy data: `fixtures/synthetic-q2-2026/` with `v0.1.0/` and `v0.2.0/` comparison snapshots
+- Browser workflow: `tide-web-browser`
 
-## Demo Flow
+## Browser Flow
 
 1. Open the plugin in Codex and ask: `Review Tide SME cashflow health and invoice collection risks.`
-2. Use the latest CSVs in `fixtures/synthetic-q2-2026/`, or compare `fixtures/synthetic-q2-2026/v0.1.0/` against `fixtures/synthetic-q2-2026/v0.2.0/`.
-3. Review the ranked cashflow exceptions, collection risks, and recommended product actions.
-4. Inspect `analytics/dashboard-summary.json`, `analytics/version-comparison.json`, and the versioned `analytics/sample-events*.jsonl` files for the Telvine product analytics view.
+2. Sign in to Tide in the browser when prompted.
+3. Let the plugin review visible balances, cash movements, invoice status, and categorisation surfaces.
+4. Review the cashflow summary, ranked risks, and suggested next actions.
 
 ## Safety
 
-All data in this plugin is synthetic. Do not put live customer data, bank account numbers, customer names, invoice contents, connector payloads, prompts, or model outputs in analytics events.
+Use browser-derived summaries only. Do not put live customer data, bank account numbers, customer names, invoice contents, screenshots, browser captures, prompts, tool arguments, or model outputs in Telvine events.

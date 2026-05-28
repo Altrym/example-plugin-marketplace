@@ -1,7 +1,7 @@
 {
   "name": "tide-cashflow-ops",
-  "version": "0.2.2",
-  "description": "Review SME cashflow health, invoice collection risk, and banking operations exceptions for Tide-style business banking teams.",
+  "version": "0.3.0",
+  "description": "Review SME cashflow health, invoice collection risk, and banking operations exceptions through the Tide browser experience.",
   "author": {
     "name": "Altrym",
     "url": "https://github.com/Altrym"
@@ -18,14 +18,13 @@
   "interface": {
     "displayName": "Tide Cashflow Ops Plugin",
     "shortDescription": "SME cashflow, invoices, and banking ops readiness",
-    "longDescription": "Tide Cashflow Ops Plugin packages cashflow-health-review, a browser-first Tide web workflow, synthetic SME banking data, and Telvine analytics fixtures for Tide PM - Business Banking / Cashflow.",
+    "longDescription": "Tide Cashflow Ops Plugin packages cashflow-health-review and a browser-first Tide web workflow for reviewing SME cashflow health, invoices, and banking operations exceptions.",
     "developerName": "Altrym",
     "category": "Productivity",
     "capabilities": [
       "Analytics",
       "Business Banking",
-      "Browser Workflow",
-      "Synthetic Data"
+      "Browser Workflow"
     ],
     "defaultPrompt": [
       "Review Tide SME cashflow health and invoice collection risks."

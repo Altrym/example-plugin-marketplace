@@ -1,7 +1,0 @@
-movement_id,account_id,date,type,category,amount_gbp,confidence,note
-mov_1101,acct_sme_001,2026-06-18,inflow,invoice_payment,5400,0.94,overdue paid
-mov_1102,acct_sme_001,2026-06-20,outflow,materials,-1980,0.88,supplier batch
-mov_1103,acct_sme_003,2026-06-21,inflow,invoice_payment,2800,0.93,partial recovery
-mov_1104,acct_sme_003,2026-06-22,outflow,software,-420,0.86,auto categorised
-mov_1105,acct_sme_004,2026-06-23,outflow,payroll,-6900,0.96,weekly payroll
-mov_1106,acct_sme_005,2026-06-25,inflow,invoice_payment,11800,0.92,client settlement

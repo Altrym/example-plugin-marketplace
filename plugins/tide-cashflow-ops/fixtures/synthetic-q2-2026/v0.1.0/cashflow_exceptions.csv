@@ -1,5 +1,0 @@
-exception_id,account_id,severity,exception_type,metric,recommended_action
-exc_3001,acct_sme_003,high,projected_low_balance,projected_30d_balance_gbp=2800,Prompt invoice follow-up and review upcoming rent obligations
-exc_3002,acct_sme_004,high,payroll_coverage_risk,available_gbp=9210 payroll_due_gbp=7100,Surface cash buffer alert before next payroll run
-exc_3003,acct_sme_003,medium,uncategorised_spend,amount_gbp=1360 confidence=0.41,Ask user to classify spend for VAT readiness
-exc_3004,acct_sme_001,medium,overdue_invoice,days_overdue=8 amount_gbp=5400,Recommend collection nudge workflow

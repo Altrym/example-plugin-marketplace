@@ -1,7 +1,0 @@
-movement_id,account_id,date,type,category,amount_gbp,confidence,note
-mov_1001,acct_sme_001,2026-06-03,outflow,materials,-2840,0.82,supplier batch
-mov_1002,acct_sme_001,2026-06-08,inflow,invoice_payment,6200,0.91,paid invoice
-mov_1003,acct_sme_003,2026-06-09,outflow,rent,-4200,0.97,monthly rent
-mov_1004,acct_sme_003,2026-06-11,outflow,uncategorised,-1360,0.41,needs category
-mov_1005,acct_sme_004,2026-06-12,outflow,payroll,-7100,0.94,weekly payroll
-mov_1006,acct_sme_005,2026-06-14,inflow,invoice_payment,12400,0.89,partial settlement

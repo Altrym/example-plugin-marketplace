@@ -1,5 +1,0 @@
-exception_id,account_id,severity,exception_type,metric,recommended_action
-exc_3101,acct_sme_004,medium,projected_low_balance,projected_30d_balance_gbp=4380,Show cash buffer alert and invoice collection suggestion
-exc_3102,acct_sme_003,medium,aged_receivable,days_overdue=22 remaining_gbp=1000,Recommend automated reminder
-exc_3103,acct_sme_004,low,payroll_coverage_watch,available_gbp=10680 payroll_due_gbp=6900,Monitor next payroll cycle
-exc_3104,acct_sme_003,low,vat_category_review,auto_categorised=true sample_required=true,Request spot check before VAT export

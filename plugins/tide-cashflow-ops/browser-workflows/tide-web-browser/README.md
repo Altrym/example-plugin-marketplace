@@ -7,6 +7,7 @@ Browser-first workflow for reviewing Tide web account summaries.
 - Navigate Tide web account and cashflow surfaces with the user's explicit browser session.
 - Derive review-safe summaries for balances, transactions, invoices, and categorisation readiness.
 - Avoid payment initiation, credit decisions, account mutation, or support-message automation.
+- Continue the task using browser-visible information only; do not fall back to bundled example data.
 
 ## Telemetry
 

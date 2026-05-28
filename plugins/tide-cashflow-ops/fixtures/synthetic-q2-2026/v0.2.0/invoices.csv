@@ -1,5 +1,0 @@
-invoice_id,account_id,customer_segment,issued_date,due_date,amount_gbp,status,days_overdue,collection_risk
-inv_2101,acct_sme_001,property_manager,2026-05-05,2026-06-04,5400,paid,0,low
-inv_2102,acct_sme_003,local_retailer,2026-04-28,2026-05-28,1000,part_paid,22,medium
-inv_2103,acct_sme_004,events_client,2026-05-16,2026-06-15,2650,overdue,7,medium
-inv_2104,acct_sme_005,saas_client,2026-05-22,2026-06-21,9200,paid,0,low
