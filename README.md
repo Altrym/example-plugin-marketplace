@@ -26,6 +26,7 @@ one of the target-customer plugins.
 | `brex-spend-controls` | Brex expense management / spend controls PM | Spend policy, card limits, and reimbursement controls |
 | `mercury-treasury` | Mercury banking / cash and treasury PM | Balances, runway, statements, and treasury checks |
 | `tide-cashflow-ops` | Tide business banking / cashflow PM | SME balances, invoices, cashflow risk, and banking operations exceptions |
+| `xero-expensing` | Xero expenses / AP automation PM | Expense claims, receipts, reimbursements, and accounting sync checks |
 | `telvine-plugin-builder` | Plugin builders and platform teams | Create provider renditions and register plugins with Telvine |
 
 ## Repository Layout
