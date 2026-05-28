@@ -40,6 +40,47 @@ Use live Tide browser review by default when the user says "my account", "our Ti
 
 Only use fixtures when the user explicitly asks for a demo or synthetic review, or when live browser/export access is unavailable.
 
+## Browser Access Ladder
+
+For live Tide reviews, try every read-only browser route before falling back to exports:
+
+1. Codex in-app Browser plugin, if available.
+2. Codex Chrome plugin or connected Chrome extension, if available.
+3. Local Chrome automation on macOS using AppleScript:
+   - read active tab URL
+   - navigate to Tide URLs
+   - execute read-only JavaScript to extract visible page text and links
+4. Local Safari automation on macOS, if Chrome is unavailable.
+5. User-provided export or screenshot.
+
+For live account reviews, "browser unavailable" means all configured read-only browser routes failed, not just the Codex in-app browser. Do not conclude browser access is unavailable after only checking the in-app browser backend. If one route fails, record the non-sensitive failure reason and continue to the next route.
+
+Only perform read-only actions:
+
+- navigate
+- click navigation links/tabs
+- read visible text
+- summarize balances, transactions, invoices, taxes, bookkeeping, and payroll status
+
+Never:
+
+- initiate payments
+- create invoices or bills
+- change settings
+- send support messages
+- expose credentials, MFA, full account numbers, card details, or sensitive identifiers
+
+### macOS Chrome Read-Only Probe
+
+If the in-app browser is unavailable, check Chrome:
+
+- Get active URL:
+  `osascript -e 'tell application "Google Chrome" to if (count of windows) > 0 then get URL of active tab of front window'`
+- Extract visible Tide links with read-only JavaScript over `document.querySelectorAll("a,button")`.
+- Extract page summary with read-only `document.body.innerText`.
+
+Mask bank identifiers in the final answer.
+
 ## Telemetry Preflight
 
 Before review work, run `scripts/emit-telvine-event.mjs`. The helper reuses an existing local runtime key, provisions an installation-scoped write key from Telvine on first use, or skips telemetry silently if provisioning is unavailable.
@@ -48,7 +89,7 @@ Before review work, run `scripts/emit-telvine-event.mjs`. The helper reuses an e
 - Emit `skill.invocation.start`.
 - When the Tide browser summaries are loaded, emit `plugin.component.invoked` for `tide-web-browser`.
 - At the end, emit `skill.invocation.end`.
-- If telemetry is unavailable, continue the user task without surfacing telemetry setup details.
+- If telemetry returns an auth/scope error such as `403 key_scoped_to_other_skill`, refresh the runtime write key and retry once. If the retry still fails, continue the user task without surfacing telemetry setup details.
 - If the review uses a live Tide account, keep events metadata-only and do not include account-derived values.
 - After the final user-visible review is complete, ask: "Was this Tide cashflow review useful? Reply with a 1-5 rating and an optional short note. Do not include private account details." If the user provides a rating or note, emit `feedback.submitted` with only `rating`, `comment`, and `task_category`.
 
@@ -57,11 +98,12 @@ Before review work, run `scripts/emit-telvine-event.mjs`. The helper reuses an e
 1. Run the telemetry preflight.
 2. Confirm business segment, cash runway horizon, invoice ageing policy, VAT readiness rules, and alert thresholds.
 3. Ask the user to open or sign in to Tide in the browser if a Tide session is not already available.
-4. Navigate Tide web surfaces using the browser-first routing checklist. Capture only derived, review-safe fields needed for the summary.
-5. Calculate available cash, net 30-day cashflow, invoice ageing exposure, VAT category coverage, and low-balance risk from visible browser information.
-6. Flag overdue invoices, upcoming tax or payroll obligations, uncategorised spend, unusual outflows, and accounts projected below threshold.
-7. Produce review-ready recommendations. Never move money, chase customers, or update banking records automatically.
-8. Ask for feedback after the completed review. If the user replies, send it through `scripts/emit-telvine-event.mjs` as `feedback.submitted`; do not include balances, transaction text, company names, browser data, prompts, or model output in the feedback event.
+4. Work through the browser access ladder until a read-only route succeeds. Do not stop until all read-only routes are exhausted.
+5. Navigate Tide web surfaces using the browser-first routing checklist. Capture only derived, review-safe fields needed for the summary.
+6. Calculate available cash, net 30-day cashflow, invoice ageing exposure, VAT category coverage, and low-balance risk from visible browser information.
+7. Flag overdue invoices, upcoming tax or payroll obligations, uncategorised spend, unusual outflows, and accounts projected below threshold.
+8. Produce review-ready recommendations. Never move money, chase customers, or update banking records automatically.
+9. Ask for feedback after the completed review. If the user replies, send it through `scripts/emit-telvine-event.mjs` as `feedback.submitted`; do not include balances, transaction text, company names, browser data, prompts, or model output in the feedback event.
 
 ## Expected Output
 

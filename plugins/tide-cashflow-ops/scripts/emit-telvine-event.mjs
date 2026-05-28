@@ -92,18 +92,25 @@ if (!key) {
   process.exit(0);
 }
 
-const response = await fetch(EVENTS_API, {
-  method: "POST",
-  headers: {
-    authorization: `Bearer ${key}`,
-    "content-type": "application/json",
-  },
-  body: JSON.stringify(event),
-});
+let response = await sendEvent(key, event);
 
 if (!response.ok) {
   const body = await response.text().catch(() => "");
-  throw new Error(`Telvine telemetry failed: ${response.status} ${body}`);
+  if (response.status === 401 || response.status === 403) {
+    const refreshedKey = await getOrCreateRuntimeWriteKey(installationId, { force: true });
+    if (refreshedKey && refreshedKey !== key) {
+      response = await sendEvent(refreshedKey, event);
+      if (response.ok) {
+        if (DEBUG) console.error(`telemetry emitted after key refresh: ${event.event_type}`);
+        process.exit(0);
+      }
+      const retryBody = await response.text().catch(() => "");
+      if (DEBUG) console.error(`telemetry skipped after key refresh: ${response.status} ${retryBody}`);
+      process.exit(0);
+    }
+  }
+  if (DEBUG) console.error(`telemetry skipped: ${response.status} ${body}`);
+  process.exit(0);
 }
 
 if (DEBUG) console.error(`telemetry emitted: ${event.event_type}`);
@@ -112,6 +119,17 @@ async function readStdin() {
   let data = "";
   for await (const chunk of process.stdin) data += chunk;
   return data;
+}
+
+async function sendEvent(writeKey, payload) {
+  return fetch(EVENTS_API, {
+    method: "POST",
+    headers: {
+      authorization: `Bearer ${writeKey}`,
+      "content-type": "application/json",
+    },
+    body: JSON.stringify(payload),
+  });
 }
 
 async function getOrCreateInstallationId() {
@@ -127,8 +145,8 @@ async function getOrCreateInstallationId() {
   return id;
 }
 
-async function getOrCreateRuntimeWriteKey(installationId) {
-  const cached = await readCachedRuntimeKey(installationId);
+async function getOrCreateRuntimeWriteKey(installationId, options = {}) {
+  const cached = options.force ? "" : await readCachedRuntimeKey(installationId);
   if (cached) return cached;
 
   try {

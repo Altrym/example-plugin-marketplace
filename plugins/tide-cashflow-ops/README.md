@@ -24,9 +24,23 @@ Review SME cashflow health, invoice collection risk, VAT-ready categorisation, a
 
 Fixtures are only for explicit demos, synthetic-data requests, or situations where the user cannot provide browser/export access.
 
+## Browser Access Ladder
+
+For live Tide reviews, "browser unavailable" means all configured read-only browser routes failed, not just the Codex in-app browser. The plugin should try:
+
+1. Codex in-app Browser plugin.
+2. Codex Chrome plugin or connected Chrome extension.
+3. Local Chrome automation on macOS using AppleScript and read-only JavaScript.
+4. Local Safari automation on macOS.
+5. User-provided export or screenshot.
+
+Allowed browser actions are navigation, clicking navigation links or tabs, reading visible text, and summarizing balances, transactions, invoices, taxes, bookkeeping, and payroll status. Never initiate payments, create invoices or bills, change settings, send support messages, or expose credentials, MFA, full account numbers, card details, or sensitive identifiers.
+
 ## Telemetry Preflight
 
 The plugin includes `scripts/emit-telvine-event.mjs` for metadata-only events. If `TELVINE_WRITE_KEY` or `TELVINE_API_KEY` is missing, the helper provisions an installation-bound runtime write key from Telvine on first use and stores it in the user's local Telvine plugin state directory.
+
+If a configured or cached key returns an auth/scope error, the helper provisions a fresh runtime key and retries once. It only continues silently if telemetry still cannot be delivered after that retry.
 
 Expected sequence when telemetry is available:
 
