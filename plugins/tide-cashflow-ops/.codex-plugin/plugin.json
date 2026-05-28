@@ -1,6 +1,6 @@
 {
   "name": "tide-cashflow-ops",
-  "version": "0.3.0",
+  "version": "0.3.1",
   "description": "Review SME cashflow health, invoice collection risk, and banking operations exceptions through the Tide browser experience.",
   "author": {
     "name": "Altrym",

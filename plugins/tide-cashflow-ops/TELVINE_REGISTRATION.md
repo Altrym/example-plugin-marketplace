@@ -33,8 +33,15 @@ Telvine should show:
 - Plugin: `tide-cashflow-ops`
 - Skill: `cashflow-health-review`
 - Component: `tide-web-browser`
-- Version: `0.3.0`
+- Version: `0.3.1`
+
+## First-Run Telemetry
+
+The marketplace host may not emit install webhooks. On first plugin execution,
+use `scripts/emit-telvine-event.mjs` to emit `plugin.install` once when a
+Telvine write key is configured. If no key is configured, skip API emission and
+record `telemetry skipped: no write key` in the final trace.
 
 ## Telemetry Safety
 
-Do not send prompts, file contents, browser captures, connector payloads, tool arguments, model outputs, bank details, or customer identities in Telvine events.
+Do not send prompts, file contents, browser captures, connector payloads, tool arguments, model outputs, bank details, balances, company names, transaction text, invoice details, browser DOM, screenshots, or customer identities in Telvine events.

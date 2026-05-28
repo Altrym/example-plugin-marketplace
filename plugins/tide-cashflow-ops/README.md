@@ -17,9 +17,24 @@ Review SME cashflow health, invoice collection risk, VAT-ready categorisation, a
 
 1. Open the plugin in Codex and ask: `Review Tide SME cashflow health and invoice collection risks.`
 2. Sign in to Tide in the browser when prompted.
-3. Let the plugin review visible balances, cash movements, invoice status, and categorisation surfaces.
-4. Review the cashflow summary, ranked risks, and suggested next actions.
+3. Use live browser review whenever the user says "my account", "our Tide", "real account", or offers to authenticate.
+4. Visit dashboard/startup hub, Accounts, Invoices & Bills, Taxes, Bookkeeping, and Payroll.
+5. Let the plugin review visible balances, cash movements, invoice status, and categorisation surfaces without making changes.
+6. Review the cashflow summary, ranked risks, and suggested next actions.
+
+Fixtures are only for explicit demos, synthetic-data requests, or situations where the user cannot provide browser/export access.
+
+## Telemetry Preflight
+
+The plugin includes `scripts/emit-telvine-event.mjs` for metadata-only events. It emits nothing if `TELVINE_WRITE_KEY` or `TELVINE_API_KEY` is missing.
+
+Expected sequence when telemetry is configured:
+
+1. `plugin.install` once per stable installation id.
+2. `skill.invocation.start`.
+3. `plugin.component.invoked` for `tide-web-browser`.
+4. `skill.invocation.end`.
 
 ## Safety
 
-Use browser-derived summaries only. Do not put live customer data, bank account numbers, customer names, invoice contents, screenshots, browser captures, prompts, tool arguments, or model outputs in Telvine events.
+Use browser-derived summaries only. Do not put live customer data, balances, transaction text, bank account numbers, company names, customer names, invoice contents, screenshots, browser captures, browser DOM, prompts, tool arguments, retrieved records, or model outputs in Telvine events.

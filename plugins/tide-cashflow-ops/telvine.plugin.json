@@ -3,7 +3,7 @@
   "name": "tide-cashflow-ops",
   "display_name": "Tide Cashflow Ops Plugin",
   "owner": "Altrym",
-  "version": "0.3.0",
+  "version": "0.3.1",
   "target_customer": "Tide PM - Business Banking / Cashflow",
   "workflow_hook": "SME balances, invoices, cashflow risk, and banking operations exceptions",
   "source": "custom/tide-plugin-request",
@@ -21,6 +21,14 @@
       "component_type": "runtime_component",
       "name": "tide-web-browser",
       "telemetry_mode": "component_events"
+    },
+    {
+      "component_type": "script",
+      "name": "emit-telvine-event",
+      "telemetry_mode": "component_events",
+      "component_path": "scripts/emit-telvine-event.mjs",
+      "component_directory": "scripts",
+      "source": "generated"
     }
   ],
   "telemetry_policy": {
