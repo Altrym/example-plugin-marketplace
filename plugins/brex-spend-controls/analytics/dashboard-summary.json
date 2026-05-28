@@ -74,5 +74,11 @@
       "count": 6
     }
   ],
-  "notes": "All values are synthetic demo analytics for product and outreach conversations. No prompts, file contents, connector payloads, tool arguments, or model outputs are included."
+  "notes": "All values are synthetic demo analytics for product and outreach conversations. No prompts, file contents, connector payloads, tool arguments, or model outputs are included.",
+  "sample_event_counts": {
+    "total": 100,
+    "v0_1_0": 50,
+    "v0_2_0": 50,
+    "note": "Sample JSONL stays at the Telvine 100-event ingest limit per plugin while covering PM dashboard dimensions."
+  }
 }
