@@ -1,0 +1,7 @@
+rule_id,category,condition,threshold,currency,action
+XR-001,Meals,max_single_claim,75.00,GBP,employee_follow_up
+XR-002,Travel,approval_required_above,500.00,GBP,approver_follow_up
+XR-003,Software,receipt_required_above,50.00,GBP,employee_follow_up
+XR-004,Training,tax_code_must_be,INPUT2,GBP,finance_review
+XR-005,Hardware,capitalisation_review_above,500.00,GBP,finance_review
+XR-006,All,receipt_required_above,25.00,GBP,employee_follow_up

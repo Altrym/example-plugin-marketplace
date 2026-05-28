@@ -1,0 +1,62 @@
+{
+  "plugin_id": "plg_xero_expensing",
+  "name": "xero-expensing",
+  "display_name": "Xero Expensing Plugin",
+  "owner": "Telvine",
+  "version": "0.1.0",
+  "target_customer": "Xero PM - Expenses / AP Automation",
+  "workflow_hook": "Expense claims, receipts, reimbursements, and accounting sync checks",
+  "source": "manual/telvine-create-plugin",
+  "target_harnesses": [
+    "codex",
+    "claude-cowork",
+    "claude-code",
+    "other"
+  ],
+  "components": [
+    {
+      "component_type": "skill",
+      "name": "expense-readiness-review",
+      "telemetry_mode": "skill_events",
+      "skill_id": "skl_expense_readiness_review"
+    },
+    {
+      "component_type": "connector",
+      "name": "xero-api",
+      "telemetry_mode": "component_events"
+    },
+    {
+      "component_type": "runtime_component",
+      "name": "xero-web-browser",
+      "telemetry_mode": "component_events"
+    },
+    {
+      "component_type": "mcp_config",
+      "name": "xero-mcp",
+      "telemetry_mode": "component_events"
+    },
+    {
+      "component_type": "asset",
+      "name": "synthetic-q2-2026-fixtures",
+      "telemetry_mode": "declaration_only"
+    },
+    {
+      "component_type": "script",
+      "name": "emit-telvine-event",
+      "telemetry_mode": "component_events",
+      "component_path": "scripts/emit-telvine-event.mjs",
+      "component_directory": "scripts",
+      "source": "generated"
+    }
+  ],
+  "telemetry_policy": {
+    "pii": "do_not_send",
+    "connector_payloads": "do_not_send",
+    "browser_captures": "do_not_send",
+    "sample_data": "synthetic_only",
+    "event_files": [
+      "analytics/sample-events.jsonl",
+      "analytics/dashboard-summary.json"
+    ]
+  }
+}

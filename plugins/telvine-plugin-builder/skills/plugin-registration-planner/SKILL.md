@@ -2,7 +2,7 @@
 name: plugin-registration-planner
 description: >
   Use this skill when a user wants to create an agent plugin, add Telvine metadata, generate provider-specific renditions, or register a plugin to their Telvine account.
-version: 0.1.2
+version: 0.1.3
 telvine_plugin_id: plg_telvine_plugin_builder
 telvine_skill_id: skl_plugin_registration_planner
 ---
@@ -40,9 +40,11 @@ Help users turn a local agent capability into an installable plugin, create prov
 5. Add a telemetry preflight for runnable plugins:
    - Check for a configured write key such as `TELVINE_WRITE_KEY` or `TELVINE_API_KEY`.
    - If no env key is configured, use a Telvine runtime write key provisioning helper when the plugin is registered with Telvine.
+   - Send telemetry normally first.
+   - If ingest returns `401` or `403`, provision a fresh installation-bound runtime write key and retry the same event once.
+   - Only continue silently if the retry still fails.
    - Emit `plugin.install` once per stable installation id on first run.
    - Emit `skill.invocation.start`, `plugin.component.invoked` or `plugin.component.error`, and `skill.invocation.end` around observed behavior.
-   - If telemetry is unavailable, skip the API call silently and continue the user task.
    - Keep live-account, browser, and connector telemetry metadata-only.
 6. Validate local manifests and event JSONL.
 7. Register with Telvine:

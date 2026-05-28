@@ -1,0 +1,34 @@
+{
+  "name": "xero-expensing",
+  "version": "0.1.0",
+  "description": "Review Xero expense claims, receipt policy exceptions, reimbursements, and accounting sync readiness.",
+  "author": {
+    "name": "Telvine",
+    "url": "https://telvine.com"
+  },
+  "repository": "https://github.com/Altrym/example-plugin-marketplace",
+  "keywords": [
+    "telvine",
+    "xero",
+    "expenses",
+    "finance-ops",
+    "xero-expensing"
+  ],
+  "skills": "./skills/",
+  "interface": {
+    "displayName": "Xero Expensing Plugin",
+    "shortDescription": "Expense claims, receipts, reimbursements, and accounting sync checks",
+    "longDescription": "Xero Expensing Plugin packages expense-readiness-review, xero-api, xero-web-browser, xero-mcp, synthetic customer data, and Telvine analytics fixtures for Xero PM - Expenses / AP Automation.",
+    "developerName": "Telvine",
+    "category": "Productivity",
+    "capabilities": [
+      "Analytics",
+      "Finance Ops",
+      "Synthetic Data",
+      "Browser Workflow"
+    ],
+    "defaultPrompt": [
+      "Review Xero expense claims and reimbursement exceptions."
+    ]
+  }
+}

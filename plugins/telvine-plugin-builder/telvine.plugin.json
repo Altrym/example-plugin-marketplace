@@ -3,7 +3,7 @@
   "name": "telvine-plugin-builder",
   "display_name": "Telvine Plugin Builder",
   "owner": "Altrym",
-  "version": "0.1.2",
+  "version": "0.1.3",
   "target_customer": "Plugin builders and teams registering plugins with Telvine",
   "workflow_hook": "Create plugin metadata, provider renditions, telemetry fixtures, and Telvine registration",
   "source": "custom/meta-plugin-builder",

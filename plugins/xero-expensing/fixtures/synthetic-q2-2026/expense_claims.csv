@@ -1,0 +1,9 @@
+claim_id,submitted_date,employee_role,category,amount,currency,receipt_status,tax_code,billable,project_code,approval_status,exception_hint
+XE-1001,2026-05-03,Sales,Travel,284.60,GBP,attached,INPUT2,true,PRJ-042,approved,clean
+XE-1002,2026-05-04,Engineering,Software,119.00,GBP,missing,INPUT2,false,,pending,missing_receipt
+XE-1003,2026-05-05,Marketing,Meals,96.30,GBP,attached,INPUT2,false,,approved,over_meal_limit
+XE-1004,2026-05-07,Operations,Office Supplies,42.15,GBP,attached,INPUT2,false,,approved,clean
+XE-1005,2026-05-08,Sales,Travel,811.40,GBP,attached,INPUT2,true,PRJ-099,pending,approval_required
+XE-1006,2026-05-10,Finance,Training,350.00,GBP,attached,EXEMPT,false,,approved,tax_code_review
+XE-1007,2026-05-11,Support,Meals,28.75,GBP,attached,INPUT2,false,,approved,clean
+XE-1008,2026-05-12,Engineering,Hardware,642.80,GBP,attached,INPUT2,false,,pending,capitalisation_review

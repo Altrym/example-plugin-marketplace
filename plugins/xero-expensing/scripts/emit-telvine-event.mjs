@@ -4,9 +4,9 @@ import { mkdir, readFile, writeFile } from "node:fs/promises";
 import { dirname, join } from "node:path";
 import { homedir } from "node:os";
 
-const PLUGIN_SLUG = "telvine-plugin-builder";
-const SKILL_SLUG = "plugin-registration-planner";
-const VERSION = "0.1.3";
+const PLUGIN_SLUG = "xero-expensing";
+const SKILL_SLUG = "expense-readiness-review";
+const VERSION = "0.1.0";
 const EVENTS_API = process.env.TELVINE_EVENTS_URL || process.env.TELVINE_API_URL || "https://api.telvine.com/v1/events";
 const RUNTIME_KEY_API = process.env.TELVINE_RUNTIME_KEY_URL || new URL("/v1/runtime/write-key", EVENTS_API).toString();
 const ENV_KEY = process.env.TELVINE_WRITE_KEY || process.env.TELVINE_API_KEY || "";
@@ -26,11 +26,14 @@ const forbiddenPropertyKeys = [
   "connector_payload",
   "tool_arguments",
   "model_output",
-  "generated_code",
-  "secret",
-  "token",
-  "api_key",
-  "private_key",
+  "receipt_contents",
+  "transaction_text",
+  "invoice_contents",
+  "company_name",
+  "supplier_name",
+  "customer_name",
+  "account_number",
+  "retrieved_records",
 ];
 
 const eventTypeDefaults = {
@@ -42,12 +45,12 @@ const eventTypeDefaults = {
   },
   "skill.invocation.start": {
     trigger: "explicit",
-    task_category: "generation",
+    task_category: "analysis",
   },
   "plugin.component.invoked": {
     component_type: "runtime_component",
-    component_name: "telvine-registration-helper",
-    operation: "generated",
+    component_name: "xero-web-browser",
+    operation: "loaded",
   },
   "skill.invocation.end": {
     duration_ms: 0,
@@ -56,10 +59,10 @@ const eventTypeDefaults = {
     outcome: "completed",
     completion_quality: "not_applicable",
     user_visible_output: true,
-    task_category: "generation",
+    task_category: "analysis",
   },
   "feedback.submitted": {
-    task_category: "generation",
+    task_category: "analysis",
   },
 };
 
@@ -67,7 +70,7 @@ const stdin = await readStdin();
 const input = stdin.trim() ? JSON.parse(stdin) : {};
 const eventType = input.event_type || "plugin.install";
 if (!eventTypeDefaults[eventType] && eventType !== "plugin.component.error" && eventType !== "skill.invocation.error") {
-  throw new Error(`Unsupported event_type for Telvine Plugin Builder telemetry helper: ${eventType}`);
+  throw new Error(`Unsupported event_type for Xero telemetry helper: ${eventType}`);
 }
 
 const properties = {
@@ -81,8 +84,9 @@ const runtimeCredential = await getRuntimeCredential(installationId);
 const key = ENV_KEY || runtimeCredential.key;
 const pluginId = input.plugin_id || ENV_PLUGIN_ID || runtimeCredential.pluginId;
 const skillId = input.skill_id || ENV_SKILL_ID || runtimeCredential.skillId;
+const skillRequired = eventType.startsWith("skill.") || eventType === "feedback.submitted";
 
-if (!key || !pluginId || ((eventType.startsWith("skill.") || eventType === "feedback.submitted") && !skillId)) {
+if (!key || !pluginId || (skillRequired && !skillId)) {
   if (DEBUG) console.error(`telemetry skipped: missing runtime credential (${eventType})`);
   process.exit(0);
 }
@@ -96,7 +100,7 @@ const event = {
   idempotency_key: input.idempotency_key || makeIdempotencyKey(eventType, installationId),
   runtime: input.runtime || process.env.TELVINE_RUNTIME || "codex-app",
   properties,
-  ...(eventType.startsWith("skill.") || eventType === "feedback.submitted" ? { skill_id: skillId } : {}),
+  ...(skillRequired ? { skill_id: skillId } : {}),
 };
 
 let response = await sendEvent(key, event);
@@ -108,12 +112,11 @@ if (!response.ok) {
     const refreshedKey = refreshedCredential.key;
     const refreshedPluginId = input.plugin_id || refreshedCredential.pluginId || ENV_PLUGIN_ID;
     const refreshedSkillId = input.skill_id || refreshedCredential.skillId || ENV_SKILL_ID;
-    const refreshedSkillRequired = eventType.startsWith("skill.") || eventType === "feedback.submitted";
-    if (refreshedKey && refreshedPluginId && (!refreshedSkillRequired || refreshedSkillId) && refreshedKey !== key) {
+    if (refreshedKey && refreshedPluginId && (!skillRequired || refreshedSkillId) && refreshedKey !== key) {
       response = await sendEvent(refreshedKey, {
         ...event,
         plugin_id: refreshedPluginId,
-        ...(eventType.startsWith("skill.") || eventType === "feedback.submitted" ? { skill_id: refreshedSkillId } : {}),
+        ...(skillRequired ? { skill_id: refreshedSkillId } : {}),
       });
       if (response.ok) {
         if (DEBUG) console.error(`telemetry emitted after key refresh: ${event.event_type}`);

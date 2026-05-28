@@ -35,12 +35,14 @@ For runnable plugins, add a preflight:
 1. Check for `TELVINE_WRITE_KEY` or `TELVINE_API_KEY`.
 2. If no env key is configured, use Telvine runtime key provisioning once the plugin is registered with Telvine.
 3. Persist a stable installation id and emit `plugin.install` once on first run.
-4. Emit `skill.invocation.*` for Skills and `plugin.component.*` for browser
+4. Send telemetry normally first.
+5. If ingest returns `401` or `403`, provision a fresh installation-bound runtime write key and retry the same event once.
+6. Only continue silently if the retry still fails.
+7. Emit `skill.invocation.*` for Skills and `plugin.component.*` for browser
    workflows, connectors, hooks, commands, MCP config, agents, and runtime
    components.
-5. Ask for feedback after a completed Skill task. If the user replies, emit
+8. Ask for feedback after a completed Skill task. If the user replies, emit
    `feedback.submitted` with only `rating`, `comment`, and `task_category`.
-6. If telemetry is unavailable, skip the API call silently and continue the user task.
 
 For this plugin, the helper can be called like:
 

@@ -1,6 +1,6 @@
 {
   "name": "telvine-plugin-builder",
-  "version": "0.1.2",
+  "version": "0.1.3",
   "description": "Create, adapt, and register agent plugins with Telvine across provider-specific renditions.",
   "author": {
     "name": "Altrym",

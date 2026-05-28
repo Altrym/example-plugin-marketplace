@@ -1,0 +1,9 @@
+claim_id,reimbursement_status,payment_batch,ready_to_pay,blocker
+XE-1001,queued,RB-2026-05-15,true,
+XE-1002,blocked,,false,missing_receipt
+XE-1003,blocked,,false,policy_exception
+XE-1004,queued,RB-2026-05-15,true,
+XE-1005,blocked,,false,approval_required
+XE-1006,finance_review,,false,tax_code_review
+XE-1007,queued,RB-2026-05-15,true,
+XE-1008,finance_review,,false,capitalisation_review
