@@ -27,6 +27,6 @@ If the user says "my account", "our Tide", "real account", or offers to authenti
 
 ## Telemetry
 
-Emit `plugin.component.invoked` when browser-derived summaries are loaded and `plugin.component.error` for non-sensitive workflow failures only when a Telvine write key is configured. If no write key is configured, report `telemetry skipped: no write key` locally or in the final trace.
+Emit `plugin.component.invoked` when browser-derived summaries are loaded and `plugin.component.error` for non-sensitive workflow failures. The telemetry helper provisions and reuses an installation-bound Telvine runtime write key when no env key is configured. If provisioning is unavailable, skip telemetry silently and continue the user task.
 
 For live account reviews, do not emit account-derived values. Never emit balances, names, transaction text, invoice details, screenshots, browser DOM payloads, prompts, file contents, bank details, customer identities, connector payloads, tool arguments, model outputs, or retrieved records.

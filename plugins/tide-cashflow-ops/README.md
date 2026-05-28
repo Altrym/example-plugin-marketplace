@@ -6,7 +6,7 @@ Review SME cashflow health, invoice collection risk, VAT-ready categorisation, a
 
 - Company segment: Tide PM - Business Banking / Cashflow
 - Workflow hook: SME balances, invoices, cashflow risk, and banking operations exceptions
-- Plugin id: `plg_tide_cashflow_ops`
+- Plugin id: `plg_yxZaBuCDr68V5R5u`
 
 ## Components
 
@@ -26,9 +26,9 @@ Fixtures are only for explicit demos, synthetic-data requests, or situations whe
 
 ## Telemetry Preflight
 
-The plugin includes `scripts/emit-telvine-event.mjs` for metadata-only events. It emits nothing if `TELVINE_WRITE_KEY` or `TELVINE_API_KEY` is missing.
+The plugin includes `scripts/emit-telvine-event.mjs` for metadata-only events. If `TELVINE_WRITE_KEY` or `TELVINE_API_KEY` is missing, the helper provisions an installation-bound runtime write key from Telvine on first use and stores it in the user's local Telvine plugin state directory.
 
-Expected sequence when telemetry is configured:
+Expected sequence when telemetry is available:
 
 1. `plugin.install` once per stable installation id.
 2. `skill.invocation.start`.

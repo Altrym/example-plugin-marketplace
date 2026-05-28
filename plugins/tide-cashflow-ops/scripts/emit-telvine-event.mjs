@@ -1,15 +1,19 @@
 #!/usr/bin/env node
-import { createHash, randomUUID } from "node:crypto";
+import { createCipheriv, createDecipheriv, createHash, randomBytes, randomUUID } from "node:crypto";
 import { mkdir, readFile, writeFile } from "node:fs/promises";
 import { dirname, join } from "node:path";
 import { homedir } from "node:os";
 
-const PLUGIN_ID = "plg_tide_cashflow_ops";
-const SKILL_ID = "skl_cashflow_health_review";
-const VERSION = "0.3.1";
-const API = process.env.TELVINE_API_URL || "https://api.telvine.com/v1/events";
-const KEY = process.env.TELVINE_WRITE_KEY || process.env.TELVINE_API_KEY || "";
-const INSTALL_FILE = join(homedir(), ".telvine", "plugins", "tide-cashflow-ops", "install_id");
+const PLUGIN_ID = "plg_yxZaBuCDr68V5R5u";
+const SKILL_ID = "skl_jfQK6gsd3JnsiNA3";
+const VERSION = "0.3.3";
+const EVENTS_API = process.env.TELVINE_EVENTS_URL || process.env.TELVINE_API_URL || "https://api.telvine.com/v1/events";
+const RUNTIME_KEY_API = process.env.TELVINE_RUNTIME_KEY_URL || new URL("/v1/runtime/write-key", EVENTS_API).toString();
+const ENV_KEY = process.env.TELVINE_WRITE_KEY || process.env.TELVINE_API_KEY || "";
+const DEBUG = process.env.TELVINE_DEBUG_TELEMETRY === "1";
+const PLUGIN_STATE_DIR = join(homedir(), ".telvine", "plugins", "tide-cashflow-ops");
+const INSTALL_FILE = join(PLUGIN_STATE_DIR, "install_id");
+const RUNTIME_KEY_FILE = join(PLUGIN_STATE_DIR, "runtime_key.json");
 
 const forbiddenPropertyKeys = [
   "prompt",
@@ -69,6 +73,7 @@ const properties = {
 assertMetadataOnly(properties);
 
 const installationId = input.installation_id || await getOrCreateInstallationId();
+const key = ENV_KEY || await getOrCreateRuntimeWriteKey(installationId);
 const event = {
   event_type: eventType,
   plugin_id: PLUGIN_ID,
@@ -81,15 +86,15 @@ const event = {
   ...(eventType.startsWith("skill.") ? { skill_id: SKILL_ID } : {}),
 };
 
-if (!KEY) {
-  console.error(`telemetry skipped: no write key (${event.event_type})`);
+if (!key) {
+  if (DEBUG) console.error(`telemetry skipped: no runtime write key (${event.event_type})`);
   process.exit(0);
 }
 
-const response = await fetch(API, {
+const response = await fetch(EVENTS_API, {
   method: "POST",
   headers: {
-    authorization: `Bearer ${KEY}`,
+    authorization: `Bearer ${key}`,
     "content-type": "application/json",
   },
   body: JSON.stringify(event),
@@ -100,7 +105,7 @@ if (!response.ok) {
   throw new Error(`Telvine telemetry failed: ${response.status} ${body}`);
 }
 
-console.error(`telemetry emitted: ${event.event_type}`);
+if (DEBUG) console.error(`telemetry emitted: ${event.event_type}`);
 
 async function readStdin() {
   let data = "";
@@ -119,6 +124,101 @@ async function getOrCreateInstallationId() {
   await mkdir(dirname(INSTALL_FILE), { recursive: true });
   await writeFile(INSTALL_FILE, `${id}\n`, { mode: 0o600 });
   return id;
+}
+
+async function getOrCreateRuntimeWriteKey(installationId) {
+  const cached = await readCachedRuntimeKey(installationId);
+  if (cached) return cached;
+
+  try {
+    const response = await fetch(RUNTIME_KEY_API, {
+      method: "POST",
+      headers: { "content-type": "application/json" },
+      body: JSON.stringify({
+        plugin_id: PLUGIN_ID,
+        skill_id: SKILL_ID,
+        installation_id: installationId,
+        runtime: process.env.TELVINE_RUNTIME || "codex-app",
+        runtime_version: process.env.TELVINE_RUNTIME_VERSION,
+      }),
+    });
+    if (!response.ok) {
+      if (DEBUG) console.error(`telemetry key provisioning failed: ${response.status}`);
+      return "";
+    }
+
+    const body = await response.json();
+    if (!body?.key || typeof body.key !== "string") {
+      if (DEBUG) console.error("telemetry key provisioning failed: missing key");
+      return "";
+    }
+    await writeCachedRuntimeKey(installationId, body.key, body.expires_at);
+    if (DEBUG) console.error("telemetry runtime write key provisioned");
+    return body.key;
+  } catch (error) {
+    if (DEBUG) console.error(`telemetry key provisioning failed: ${error instanceof Error ? error.message : String(error)}`);
+    return "";
+  }
+}
+
+async function readCachedRuntimeKey(installationId) {
+  try {
+    const payload = JSON.parse(await readFile(RUNTIME_KEY_FILE, "utf8"));
+    if (payload.plugin_id !== PLUGIN_ID || payload.installation_id !== installationId || !payload.key) return "";
+    if (payload.expires_at && new Date(payload.expires_at).getTime() - Date.now() < 60 * 60 * 1000) return "";
+    return decryptRuntimeKey(payload.key, installationId);
+  } catch {
+    return "";
+  }
+}
+
+async function writeCachedRuntimeKey(installationId, key, expiresAt) {
+  await mkdir(dirname(RUNTIME_KEY_FILE), { recursive: true });
+  await writeFile(
+    RUNTIME_KEY_FILE,
+    `${JSON.stringify(
+      {
+        plugin_id: PLUGIN_ID,
+        installation_id: installationId,
+        expires_at: expiresAt || null,
+        key: encryptRuntimeKey(key, installationId),
+      },
+      null,
+      2,
+    )}\n`,
+    { mode: 0o600 },
+  );
+}
+
+function encryptRuntimeKey(key, installationId) {
+  const iv = randomBytes(12);
+  const cipher = createCipheriv("aes-256-gcm", runtimeKeyEncryptionKey(installationId), iv);
+  const encrypted = Buffer.concat([cipher.update(key, "utf8"), cipher.final()]);
+  return {
+    alg: "aes-256-gcm-local-obfuscation",
+    iv: iv.toString("base64url"),
+    tag: cipher.getAuthTag().toString("base64url"),
+    ciphertext: encrypted.toString("base64url"),
+  };
+}
+
+function decryptRuntimeKey(payload, installationId) {
+  const decipher = createDecipheriv(
+    "aes-256-gcm",
+    runtimeKeyEncryptionKey(installationId),
+    Buffer.from(payload.iv, "base64url"),
+  );
+  decipher.setAuthTag(Buffer.from(payload.tag, "base64url"));
+  return Buffer.concat([
+    decipher.update(Buffer.from(payload.ciphertext, "base64url")),
+    decipher.final(),
+  ]).toString("utf8");
+}
+
+function runtimeKeyEncryptionKey(installationId) {
+  return createHash("sha256")
+    .update(`${PLUGIN_ID}:${installationId}:${homedir()}`)
+    .digest();
 }
 
 function makeIdempotencyKey(eventType, installationId) {
