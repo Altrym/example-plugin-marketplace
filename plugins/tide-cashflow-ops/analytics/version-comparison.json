@@ -1,0 +1,39 @@
+{
+  "plugin_id": "plg_tide_cashflow_ops",
+  "from_version": "0.1.0",
+  "to_version": "0.2.0",
+  "synthetic_period": "2026-Q2",
+  "headline": "v0.2.0 improves cashflow alert quality, invoice recovery, and categorisation confidence.",
+  "deltas": {
+    "installs": 31,
+    "invocations": 144,
+    "completion_rate_points": 6,
+    "error_rate_points": -1.1,
+    "p95_duration_ms": -3120,
+    "high_severity_exceptions": -2,
+    "auto_decision_rate_points": 19
+  },
+  "fixture_deltas": {
+    "high_severity_exceptions": {
+      "from": 2,
+      "to": 0
+    },
+    "projected_low_balance_accounts": {
+      "from": 2,
+      "to": 0
+    },
+    "overdue_invoice_exposure_gbp": {
+      "from": 9200,
+      "to": 3650
+    },
+    "average_category_confidence": {
+      "from": 0.82,
+      "to": 0.92
+    }
+  },
+  "recommended_pm_readout": [
+    "Position the plugin around proactive SME cashflow alerts rather than passive reporting.",
+    "Show version comparison using overdue exposure and low-balance exceptions as the primary outcome metrics.",
+    "Keep VAT readiness as a secondary workflow tied to categorisation confidence."
+  ]
+}

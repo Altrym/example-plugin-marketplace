@@ -25,6 +25,7 @@ one of the target-customer plugins.
 | `ramp-expense-ops` | Ramp accounting automation / expense PM | Spend coding, categorisation, and close support |
 | `brex-spend-controls` | Brex expense management / spend controls PM | Spend policy, card limits, and reimbursement controls |
 | `mercury-treasury` | Mercury banking / cash and treasury PM | Balances, runway, statements, and treasury checks |
+| `tide-cashflow-ops` | Tide business banking / cashflow PM | SME balances, invoices, cashflow risk, and banking operations exceptions |
 
 ## Repository Layout
 
@@ -38,8 +39,8 @@ plugins/<plugin>/fixtures/synthetic-q2-2026/v0.1.0/
 plugins/<plugin>/fixtures/synthetic-q2-2026/v0.2.0/
 ```
 
-The marketplace manifest exposes the first three GTM target-customer plugins as
-available Productivity plugins. All analytics and fixture data are synthetic.
+The marketplace manifest exposes the GTM target-customer plugins as available
+Productivity plugins. All analytics and fixture data are synthetic.
 
 ## Private Org Distribution
 

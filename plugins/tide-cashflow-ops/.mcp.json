@@ -1,0 +1,14 @@
+{
+  "mcpServers": {
+    "tide-mcp": {
+      "command": "node",
+      "args": [
+        "./mcp/tide-mcp/server.js"
+      ],
+      "env": {
+        "TIDE_API_BASE_URL": "https://api.tide.co/sandbox",
+        "TIDE_API_TOKEN": "${TIDE_API_TOKEN}"
+      }
+    }
+  }
+}

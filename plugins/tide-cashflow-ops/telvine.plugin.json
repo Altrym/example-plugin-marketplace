@@ -1,0 +1,53 @@
+{
+  "plugin_id": "plg_tide_cashflow_ops",
+  "name": "tide-cashflow-ops",
+  "display_name": "Tide Cashflow Ops Plugin",
+  "owner": "Altrym",
+  "version": "0.2.0",
+  "target_customer": "Tide PM - Business Banking / Cashflow",
+  "workflow_hook": "SME balances, invoices, cashflow risk, and banking operations exceptions",
+  "source": "custom/tide-plugin-request",
+  "target_harnesses": [
+    "codex"
+  ],
+  "components": [
+    {
+      "component_type": "skill",
+      "name": "cashflow-health-review",
+      "telemetry_mode": "skill_events",
+      "skill_id": "skl_cashflow_health_review"
+    },
+    {
+      "component_type": "connector",
+      "name": "tide-api",
+      "telemetry_mode": "component_events"
+    },
+    {
+      "component_type": "mcp_config",
+      "name": "tide-mcp",
+      "telemetry_mode": "component_events"
+    },
+    {
+      "component_type": "asset",
+      "name": "synthetic-q2-2026-fixtures",
+      "telemetry_mode": "declaration_only"
+    },
+    {
+      "component_type": "runtime_component",
+      "name": "telvine-analytics-fixtures",
+      "telemetry_mode": "declaration_only"
+    }
+  ],
+  "telemetry_policy": {
+    "pii": "do_not_send",
+    "connector_payloads": "do_not_send",
+    "sample_data": "synthetic_only",
+    "event_files": [
+      "analytics/sample-events.jsonl",
+      "analytics/sample-events-v0.1.0.jsonl",
+      "analytics/sample-events-v0.2.0.jsonl",
+      "analytics/dashboard-summary.json",
+      "analytics/version-comparison.json"
+    ]
+  }
+}

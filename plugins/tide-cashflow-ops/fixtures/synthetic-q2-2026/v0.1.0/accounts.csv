@@ -1,0 +1,6 @@
+account_id,business_segment,region,balance_gbp,available_gbp,low_balance_threshold_gbp,projected_30d_balance_gbp,status
+acct_sme_001,trades,London,18420,17880,9000,6420,watch
+acct_sme_002,professional_services,Manchester,42300,41920,15000,31850,healthy
+acct_sme_003,retail,Bristol,12100,11640,10000,2800,risk
+acct_sme_004,hospitality,Leeds,9800,9210,8000,1900,risk
+acct_sme_005,creative_agency,Brighton,26500,26070,12000,17440,healthy

@@ -12,7 +12,7 @@ const eventsOnly = args.includes("--events-only");
 const requestedSlugs = args.filter((arg) => arg !== "--events-only");
 const targetSlugs = requestedSlugs.length
   ? requestedSlugs
-  : ["ramp-expense-ops", "brex-spend-controls", "mercury-treasury"];
+  : ["ramp-expense-ops", "brex-spend-controls", "mercury-treasury", "tide-cashflow-ops"];
 
 if (!token) {
   console.error("Missing TELVINE_CLERK_JWT. Get one from https://app.telvine.com/cli-auth and run:");
