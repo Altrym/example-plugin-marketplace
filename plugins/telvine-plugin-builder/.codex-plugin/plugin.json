@@ -1,0 +1,34 @@
+{
+  "name": "telvine-plugin-builder",
+  "version": "0.1.0",
+  "description": "Create, adapt, and register agent plugins with Telvine across provider-specific renditions.",
+  "author": {
+    "name": "Altrym",
+    "url": "https://github.com/Altrym"
+  },
+  "repository": "https://github.com/Altrym/example-plugin-marketplace",
+  "keywords": [
+    "telvine",
+    "plugin-builder",
+    "marketplace",
+    "codex",
+    "provider-renditions"
+  ],
+  "skills": "./skills/",
+  "interface": {
+    "displayName": "Telvine Plugin Builder",
+    "shortDescription": "Create plugins, provider renditions, and Telvine registration metadata",
+    "longDescription": "Telvine Plugin Builder helps users create installable agent plugins, generate provider-specific renditions for Codex and other agent surfaces, add Telvine telemetry metadata, and register plugins to their Telvine account.",
+    "developerName": "Altrym",
+    "category": "Productivity",
+    "capabilities": [
+      "Plugin Creation",
+      "Provider Renditions",
+      "Telvine Registration",
+      "Telemetry Safety"
+    ],
+    "defaultPrompt": [
+      "Help me create and register a Telvine plugin."
+    ]
+  }
+}

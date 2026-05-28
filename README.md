@@ -26,6 +26,7 @@ one of the target-customer plugins.
 | `brex-spend-controls` | Brex expense management / spend controls PM | Spend policy, card limits, and reimbursement controls |
 | `mercury-treasury` | Mercury banking / cash and treasury PM | Balances, runway, statements, and treasury checks |
 | `tide-cashflow-ops` | Tide business banking / cashflow PM | SME balances, invoices, cashflow risk, and banking operations exceptions |
+| `telvine-plugin-builder` | Plugin builders and platform teams | Create provider renditions and register plugins with Telvine |
 
 ## Repository Layout
 
@@ -41,6 +42,22 @@ plugins/<plugin>/fixtures/synthetic-q2-2026/v0.2.0/
 
 The marketplace manifest exposes the GTM target-customer plugins as available
 Productivity plugins. All analytics and fixture data are synthetic.
+
+## Register A Plugin With Telvine
+
+Use Telvine CLI for the normal publishing path:
+
+```bash
+npm i -g @telvine/cli
+telvine login
+telvine publish ./plugins/tide-cashflow-ops
+```
+
+This repository also includes a direct registration helper for local testing:
+
+```bash
+TELVINE_CLERK_JWT='<token>' node scripts/register-plugin-to-telvine.mjs plugins/tide-cashflow-ops
+```
 
 ## Private Org Distribution
 

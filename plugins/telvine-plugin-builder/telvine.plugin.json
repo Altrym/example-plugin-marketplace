@@ -1,0 +1,37 @@
+{
+  "plugin_id": "plg_telvine_plugin_builder",
+  "name": "telvine-plugin-builder",
+  "display_name": "Telvine Plugin Builder",
+  "owner": "Altrym",
+  "version": "0.1.0",
+  "target_customer": "Plugin builders and teams registering plugins with Telvine",
+  "workflow_hook": "Create plugin metadata, provider renditions, telemetry fixtures, and Telvine registration",
+  "source": "custom/meta-plugin-builder",
+  "target_harnesses": [
+    "codex"
+  ],
+  "components": [
+    {
+      "component_type": "skill",
+      "name": "plugin-registration-planner",
+      "telemetry_mode": "skill_events",
+      "skill_id": "skl_plugin_registration_planner"
+    },
+    {
+      "component_type": "runtime_component",
+      "name": "provider-rendition-generator",
+      "telemetry_mode": "component_events"
+    },
+    {
+      "component_type": "runtime_component",
+      "name": "telvine-registration-helper",
+      "telemetry_mode": "component_events"
+    }
+  ],
+  "telemetry_policy": {
+    "pii": "do_not_send",
+    "connector_payloads": "do_not_send",
+    "browser_captures": "do_not_send",
+    "sample_data": "synthetic_only"
+  }
+}
