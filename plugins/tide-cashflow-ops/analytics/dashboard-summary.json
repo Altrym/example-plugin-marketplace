@@ -1,7 +1,7 @@
 {
   "plugin_id": "plg_tide_cashflow_ops",
   "plugin_name": "Tide Cashflow Ops Plugin",
-  "version": "0.2.1",
+  "version": "0.2.2",
   "previous_version": "0.1.0",
   "synthetic_period": "2026-Q2",
   "generated_for": "Tide PM - Business Banking / Cashflow",
@@ -14,7 +14,6 @@
     "declared_components_by_type": {
       "skill": 1,
       "browser_workflow": 1,
-      "open_banking_reference": 1,
       "asset": 1,
       "runtime_component": 1
     },
@@ -74,7 +73,7 @@
     }
   ],
   "pm_insights": [
-    "Browser-first testing matches the practical path for normal Tide users who do not have an in-account API key setting.",
+    "Browser-first testing matches the practical path for normal Tide users.",
     "Cash buffer alerts correlate with higher completion quality for accounts previously projected below threshold.",
     "Invoice collection nudges reduced synthetic overdue exposure by 60 percent between versions.",
     "VAT category confidence improved after adding category review checkpoints before export."

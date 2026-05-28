@@ -1,6 +1,6 @@
 # tide-web-browser Workflow Fixture
 
-Browser-first workflow for reviewing Tide web account summaries when a normal Tide user does not have an API key or MCP server to configure.
+Browser-first workflow for reviewing Tide web account summaries.
 
 ## Scope
 

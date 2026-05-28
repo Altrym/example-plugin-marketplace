@@ -2,7 +2,7 @@
 name: cashflow-health-review
 description: >
   Use this skill when the user asks to review Tide-style SME business banking balances, invoice collection risk, VAT categorisation readiness, cashflow forecasts, or low-balance operations exceptions.
-version: 0.2.1
+version: 0.2.2
 telvine_plugin_id: plg_tide_cashflow_ops
 telvine_skill_id: skl_cashflow_health_review
 ---
@@ -20,7 +20,7 @@ Review SME cashflow health, upcoming obligations, invoice collection risk, VAT-r
 
 ## Inputs
 
-Use the browser workflow when the user wants to review their Tide account directly. Tide Open Banking access is available through Tide's developer portal for regulated third-party providers, but it is not a normal in-account API-key setting for a Tide member.
+Use the browser workflow when the user wants to review their Tide account directly. This plugin assumes normal users will test through the Tide web experience.
 
 For demos, use the CSVs in `fixtures/synthetic-q2-2026/`.
 
