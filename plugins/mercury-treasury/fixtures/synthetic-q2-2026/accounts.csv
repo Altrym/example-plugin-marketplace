@@ -1,0 +1,5 @@
+account_id,account_name,type,currency,balance,available_balance,policy_minimum
+acct_3001,Operating Checking,checking,USD,842500.00,836200.00,250000.00
+acct_3002,Payroll Checking,checking,USD,218900.00,218900.00,180000.00
+acct_3003,Treasury Reserve,treasury,USD,1850000.00,1850000.00,1500000.00
+acct_3004,Tax Reserve,savings,USD,312400.00,312400.00,300000.00

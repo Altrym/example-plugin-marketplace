@@ -1,0 +1,63 @@
+{
+  "plugin_id": "plg_mercury_treasury",
+  "plugin_name": "Mercury Treasury Plugin",
+  "version": "0.1.0",
+  "synthetic_period": "2026-Q2",
+  "generated_for": "Mercury PM - Banking / Cash & Treasury",
+  "metrics": {
+    "installs": 103,
+    "invocations": 447,
+    "error_rate": 0.018,
+    "p95_duration_ms": 14210,
+    "completion_rate": 0.91,
+    "declared_components_by_type": {
+      "skill": 1,
+      "connector": 1,
+      "mcp_config": 1,
+      "asset": 1,
+      "runtime_component": 1
+    },
+    "observed_components_by_type": {
+      "skill": 1,
+      "connector": 1,
+      "mcp_config": 1
+    }
+  },
+  "activation_funnel": [
+    {
+      "step": "installed",
+      "count": 103
+    },
+    {
+      "step": "configured_connector",
+      "count": 86
+    },
+    {
+      "step": "first_successful_run",
+      "count": 71
+    },
+    {
+      "step": "second_week_retained",
+      "count": 55
+    }
+  ],
+  "outcome_breakdown": [
+    {
+      "outcome": "completed",
+      "count": 407
+    },
+    {
+      "outcome": "partial",
+      "count": 36
+    },
+    {
+      "outcome": "blocked",
+      "count": 18
+    },
+    {
+      "outcome": "escalated",
+      "count": 9
+    }
+  ],
+  "notes": "All values are synthetic demo analytics for product and outreach conversations."
+}

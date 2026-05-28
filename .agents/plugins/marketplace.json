@@ -1,14 +1,38 @@
 {
   "name": "altrym-example-plugins",
   "interface": {
-    "displayName": "Altrym Example Plugins"
+    "displayName": "Altrym Target Customer Plugins"
   },
   "plugins": [
     {
-      "name": "example-plugin",
+      "name": "ramp-expense-ops",
       "source": {
         "source": "local",
-        "path": "./plugins/example-plugin"
+        "path": "./plugins/ramp-expense-ops"
+      },
+      "policy": {
+        "installation": "AVAILABLE",
+        "authentication": "ON_INSTALL"
+      },
+      "category": "Productivity"
+    },
+    {
+      "name": "brex-spend-controls",
+      "source": {
+        "source": "local",
+        "path": "./plugins/brex-spend-controls"
+      },
+      "policy": {
+        "installation": "AVAILABLE",
+        "authentication": "ON_INSTALL"
+      },
+      "category": "Productivity"
+    },
+    {
+      "name": "mercury-treasury",
+      "source": {
+        "source": "local",
+        "path": "./plugins/mercury-treasury"
       },
       "policy": {
         "installation": "AVAILABLE",

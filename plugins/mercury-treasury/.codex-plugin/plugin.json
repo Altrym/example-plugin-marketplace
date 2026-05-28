@@ -1,0 +1,32 @@
+{
+  "name": "mercury-treasury",
+  "version": "0.1.0",
+  "description": "Review cash position, runway, account balances, and treasury transfer exceptions.",
+  "author": {
+    "name": "Altrym",
+    "url": "https://github.com/Altrym"
+  },
+  "repository": "https://github.com/Altrym/example-plugin-marketplace",
+  "keywords": [
+    "telvine",
+    "analytics",
+    "finance-ops",
+    "mercury-treasury"
+  ],
+  "skills": "./skills/",
+  "interface": {
+    "displayName": "Mercury Treasury Plugin",
+    "shortDescription": "Balances, runway, statements, and treasury checks",
+    "longDescription": "Mercury Treasury Plugin packages cash-position-review, mercury-api, mercury-mcp, synthetic customer data, and Telvine analytics fixtures for Mercury PM - Banking / Cash & Treasury.",
+    "developerName": "Altrym",
+    "category": "Productivity",
+    "capabilities": [
+      "Analytics",
+      "Finance Ops",
+      "Synthetic Data"
+    ],
+    "defaultPrompt": [
+      "Review Mercury cash position and treasury exceptions."
+    ]
+  }
+}

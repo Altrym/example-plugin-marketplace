@@ -1,0 +1,63 @@
+{
+  "plugin_id": "plg_ramp_expense_ops",
+  "plugin_name": "Ramp Expense Ops Plugin",
+  "version": "0.1.0",
+  "synthetic_period": "2026-Q2",
+  "generated_for": "Ramp PM - Accounting Automation / Expense",
+  "metrics": {
+    "installs": 148,
+    "invocations": 642,
+    "error_rate": 0.031,
+    "p95_duration_ms": 18320,
+    "completion_rate": 0.86,
+    "declared_components_by_type": {
+      "skill": 1,
+      "connector": 1,
+      "mcp_config": 1,
+      "asset": 1,
+      "runtime_component": 1
+    },
+    "observed_components_by_type": {
+      "skill": 1,
+      "connector": 1,
+      "mcp_config": 1
+    }
+  },
+  "activation_funnel": [
+    {
+      "step": "installed",
+      "count": 148
+    },
+    {
+      "step": "configured_connector",
+      "count": 112
+    },
+    {
+      "step": "first_successful_run",
+      "count": 84
+    },
+    {
+      "step": "second_week_retained",
+      "count": 67
+    }
+  ],
+  "outcome_breakdown": [
+    {
+      "outcome": "completed",
+      "count": 552
+    },
+    {
+      "outcome": "partial",
+      "count": 51
+    },
+    {
+      "outcome": "blocked",
+      "count": 26
+    },
+    {
+      "outcome": "escalated",
+      "count": 13
+    }
+  ],
+  "notes": "All values are synthetic demo analytics for product and outreach conversations."
+}

@@ -1,0 +1,63 @@
+{
+  "plugin_id": "plg_brex_spend_ops",
+  "plugin_name": "Brex Spend Controls Plugin",
+  "version": "0.1.0",
+  "synthetic_period": "2026-Q2",
+  "generated_for": "Brex PM - Expense Management / Spend Controls",
+  "metrics": {
+    "installs": 121,
+    "invocations": 513,
+    "error_rate": 0.024,
+    "p95_duration_ms": 16940,
+    "completion_rate": 0.89,
+    "declared_components_by_type": {
+      "skill": 1,
+      "connector": 1,
+      "mcp_config": 1,
+      "asset": 1,
+      "runtime_component": 1
+    },
+    "observed_components_by_type": {
+      "skill": 1,
+      "connector": 1,
+      "mcp_config": 1
+    }
+  },
+  "activation_funnel": [
+    {
+      "step": "installed",
+      "count": 121
+    },
+    {
+      "step": "configured_connector",
+      "count": 96
+    },
+    {
+      "step": "first_successful_run",
+      "count": 75
+    },
+    {
+      "step": "second_week_retained",
+      "count": 58
+    }
+  ],
+  "outcome_breakdown": [
+    {
+      "outcome": "completed",
+      "count": 457
+    },
+    {
+      "outcome": "partial",
+      "count": 41
+    },
+    {
+      "outcome": "blocked",
+      "count": 21
+    },
+    {
+      "outcome": "escalated",
+      "count": 10
+    }
+  ],
+  "notes": "All values are synthetic demo analytics for product and outreach conversations."
+}

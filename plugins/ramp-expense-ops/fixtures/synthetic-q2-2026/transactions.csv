@@ -1,0 +1,9 @@
+transaction_id,date,employee,department,merchant,amount,category,gl_code,receipt_status,policy_flag
+txn_1001,2026-05-03,Ava Patel,Sales,United Airlines,842.18,Travel,6500,attached,ok
+txn_1002,2026-05-04,Noah Kim,Engineering,AWS,1260.00,Software,6120,attached,review_vendor
+txn_1003,2026-05-06,Mia Chen,Marketing,LinkedIn Ads,3900.00,Advertising,6400,missing,missing_receipt
+txn_1004,2026-05-09,Eli Morgan,Finance,Northstar Bistro,438.55,Meals,6510,attached,over_limit
+txn_1005,2026-05-11,Zoe Rivera,Operations,FedEx,118.44,Shipping,6250,attached,ok
+txn_1006,2026-05-13,Leo Brooks,Engineering,OpenAI,720.00,Software,6999,attached,miscoded
+txn_1007,2026-05-18,Nora Singh,Sales,Marriott,1295.20,Lodging,6500,missing,missing_receipt
+txn_1008,2026-05-21,Sam Wright,People,Greenhouse,980.00,Recruiting,6160,attached,ok

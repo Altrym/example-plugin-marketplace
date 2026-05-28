@@ -1,0 +1,50 @@
+{
+  "plugin_id": "plg_brex_spend_ops",
+  "name": "brex-spend-controls",
+  "display_name": "Brex Spend Controls Plugin",
+  "owner": "Altrym",
+  "version": "0.1.0",
+  "target_customer": "Brex PM - Expense Management / Spend Controls",
+  "workflow_hook": "Spend policy, card limits, and reimbursement controls",
+  "source": "gtm/target_plugin_examples.json",
+  "target_harnesses": [
+    "codex"
+  ],
+  "components": [
+    {
+      "component_type": "skill",
+      "name": "spend-policy-review",
+      "telemetry_mode": "skill_events",
+      "skill_id": "skl_spend_policy_review"
+    },
+    {
+      "component_type": "connector",
+      "name": "brex-api",
+      "telemetry_mode": "component_events"
+    },
+    {
+      "component_type": "mcp_config",
+      "name": "brex-mcp",
+      "telemetry_mode": "component_events"
+    },
+    {
+      "component_type": "asset",
+      "name": "synthetic-q2-2026-fixtures",
+      "telemetry_mode": "declaration_only"
+    },
+    {
+      "component_type": "runtime_component",
+      "name": "telvine-analytics-fixtures",
+      "telemetry_mode": "declaration_only"
+    }
+  ],
+  "telemetry_policy": {
+    "pii": "do_not_send",
+    "connector_payloads": "do_not_send",
+    "sample_data": "synthetic_only",
+    "event_files": [
+      "analytics/sample-events.jsonl",
+      "analytics/dashboard-summary.json"
+    ]
+  }
+}

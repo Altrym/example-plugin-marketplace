@@ -1,0 +1,32 @@
+{
+  "name": "brex-spend-controls",
+  "version": "0.1.0",
+  "description": "Review spend controls, card limits, and reimbursement policy exceptions.",
+  "author": {
+    "name": "Altrym",
+    "url": "https://github.com/Altrym"
+  },
+  "repository": "https://github.com/Altrym/example-plugin-marketplace",
+  "keywords": [
+    "telvine",
+    "analytics",
+    "finance-ops",
+    "brex-spend-controls"
+  ],
+  "skills": "./skills/",
+  "interface": {
+    "displayName": "Brex Spend Controls Plugin",
+    "shortDescription": "Spend policy, card limits, and reimbursement controls",
+    "longDescription": "Brex Spend Controls Plugin packages spend-policy-review, brex-api, brex-mcp, synthetic customer data, and Telvine analytics fixtures for Brex PM - Expense Management / Spend Controls.",
+    "developerName": "Altrym",
+    "category": "Productivity",
+    "capabilities": [
+      "Analytics",
+      "Finance Ops",
+      "Synthetic Data"
+    ],
+    "defaultPrompt": [
+      "Review Brex spend-control exceptions."
+    ]
+  }
+}

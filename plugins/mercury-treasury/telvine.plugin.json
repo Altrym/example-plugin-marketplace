@@ -1,0 +1,50 @@
+{
+  "plugin_id": "plg_mercury_treasury",
+  "name": "mercury-treasury",
+  "display_name": "Mercury Treasury Plugin",
+  "owner": "Altrym",
+  "version": "0.1.0",
+  "target_customer": "Mercury PM - Banking / Cash & Treasury",
+  "workflow_hook": "Balances, runway, statements, and treasury checks",
+  "source": "gtm/target_plugin_examples.json",
+  "target_harnesses": [
+    "codex"
+  ],
+  "components": [
+    {
+      "component_type": "skill",
+      "name": "cash-position-review",
+      "telemetry_mode": "skill_events",
+      "skill_id": "skl_cash_position_review"
+    },
+    {
+      "component_type": "connector",
+      "name": "mercury-api",
+      "telemetry_mode": "component_events"
+    },
+    {
+      "component_type": "mcp_config",
+      "name": "mercury-mcp",
+      "telemetry_mode": "component_events"
+    },
+    {
+      "component_type": "asset",
+      "name": "synthetic-q2-2026-fixtures",
+      "telemetry_mode": "declaration_only"
+    },
+    {
+      "component_type": "runtime_component",
+      "name": "telvine-analytics-fixtures",
+      "telemetry_mode": "declaration_only"
+    }
+  ],
+  "telemetry_policy": {
+    "pii": "do_not_send",
+    "connector_payloads": "do_not_send",
+    "sample_data": "synthetic_only",
+    "event_files": [
+      "analytics/sample-events.jsonl",
+      "analytics/dashboard-summary.json"
+    ]
+  }
+}

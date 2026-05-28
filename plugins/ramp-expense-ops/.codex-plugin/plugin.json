@@ -1,0 +1,32 @@
+{
+  "name": "ramp-expense-ops",
+  "version": "0.1.0",
+  "description": "Review corporate card spend coding and close-readiness exceptions for finance teams.",
+  "author": {
+    "name": "Altrym",
+    "url": "https://github.com/Altrym"
+  },
+  "repository": "https://github.com/Altrym/example-plugin-marketplace",
+  "keywords": [
+    "telvine",
+    "analytics",
+    "finance-ops",
+    "ramp-expense-ops"
+  ],
+  "skills": "./skills/",
+  "interface": {
+    "displayName": "Ramp Expense Ops Plugin",
+    "shortDescription": "Spend coding, categorisation, and close support",
+    "longDescription": "Ramp Expense Ops Plugin packages expense-coding-review, ramp-api, ramp-mcp, synthetic customer data, and Telvine analytics fixtures for Ramp PM - Accounting Automation / Expense.",
+    "developerName": "Altrym",
+    "category": "Productivity",
+    "capabilities": [
+      "Analytics",
+      "Finance Ops",
+      "Synthetic Data"
+    ],
+    "defaultPrompt": [
+      "Review Ramp spend coding exceptions for close."
+    ]
+  }
+}

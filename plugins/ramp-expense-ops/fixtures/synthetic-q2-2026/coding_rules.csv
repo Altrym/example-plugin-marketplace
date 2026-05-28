@@ -1,0 +1,6 @@
+rule_id,merchant_pattern,expected_category,expected_gl_code,max_amount,requires_receipt
+rule_01,AWS,Cloud Infrastructure,6120,5000,true
+rule_02,OpenAI,Software,6120,3000,true
+rule_03,LinkedIn Ads,Advertising,6400,2500,true
+rule_04,Bistro,Meals,6510,150,true
+rule_05,Marriott,Lodging,6500,2000,true

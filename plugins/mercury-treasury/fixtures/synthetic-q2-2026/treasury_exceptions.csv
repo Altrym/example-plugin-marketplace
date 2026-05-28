@@ -1,0 +1,5 @@
+exception_id,severity,area,reason,proposed_action,owner
+exc_01,medium,Internal transfer,Transfer pair remains pending after five business days,Confirm settlement status with bank ops,Finance Ops
+exc_02,high,Unclassified outflow,Unknown wire needs beneficiary and approval trace before close,Escalate to controller,Treasury
+exc_03,low,Tax reserve,Tax reserve only 12400 above policy minimum,Review upcoming tax payment schedule,Controller
+exc_04,medium,Runway,Reserve target coverage is 4.46 months after pending transfer,Confirm target remains four months,CFO

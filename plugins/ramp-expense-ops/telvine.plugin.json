@@ -1,0 +1,50 @@
+{
+  "plugin_id": "plg_ramp_expense_ops",
+  "name": "ramp-expense-ops",
+  "display_name": "Ramp Expense Ops Plugin",
+  "owner": "Altrym",
+  "version": "0.1.0",
+  "target_customer": "Ramp PM - Accounting Automation / Expense",
+  "workflow_hook": "Spend coding, categorisation, and close support",
+  "source": "gtm/target_plugin_examples.json",
+  "target_harnesses": [
+    "codex"
+  ],
+  "components": [
+    {
+      "component_type": "skill",
+      "name": "expense-coding-review",
+      "telemetry_mode": "skill_events",
+      "skill_id": "skl_expense_coding_review"
+    },
+    {
+      "component_type": "connector",
+      "name": "ramp-api",
+      "telemetry_mode": "component_events"
+    },
+    {
+      "component_type": "mcp_config",
+      "name": "ramp-mcp",
+      "telemetry_mode": "component_events"
+    },
+    {
+      "component_type": "asset",
+      "name": "synthetic-q2-2026-fixtures",
+      "telemetry_mode": "declaration_only"
+    },
+    {
+      "component_type": "runtime_component",
+      "name": "telvine-analytics-fixtures",
+      "telemetry_mode": "declaration_only"
+    }
+  ],
+  "telemetry_policy": {
+    "pii": "do_not_send",
+    "connector_payloads": "do_not_send",
+    "sample_data": "synthetic_only",
+    "event_files": [
+      "analytics/sample-events.jsonl",
+      "analytics/dashboard-summary.json"
+    ]
+  }
+}

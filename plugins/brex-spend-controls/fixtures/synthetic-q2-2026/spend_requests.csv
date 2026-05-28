@@ -1,0 +1,7 @@
+request_id,date,employee,department,merchant,amount,spend_type,approval_status,card_id
+req_2001,2026-05-02,Grace Lee,Sales,ZoomInfo,14400.00,subscription,approved,card_sales_01
+req_2002,2026-05-03,Owen Diaz,Engineering,GitHub,2400.00,software,approved,card_eng_03
+req_2003,2026-05-04,Ivy Nguyen,Marketing,Meta Ads,8700.00,advertising,pending,card_mkt_02
+req_2004,2026-05-08,Ben Carter,Operations,Staples,1180.00,supplies,approved,card_ops_01
+req_2005,2026-05-11,Lena Shah,Sales,Delta Air Lines,3125.00,travel,approved,card_sales_02
+req_2006,2026-05-17,Max Lewis,People,Offsite Venue,6200.00,event,pending,card_people_01

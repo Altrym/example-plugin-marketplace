@@ -1,0 +1,5 @@
+exception_id,transaction_id,severity,reason,proposed_action,owner
+exc_01,txn_1003,high,Missing receipt and advertising charge exceeds standard approval limit,Request receipt and campaign approval,Marketing Ops
+exc_02,txn_1004,medium,Meal exceeds per-person policy threshold,Request attendee list and approval,Finance Ops
+exc_03,txn_1006,high,Merchant should map to Software GL 6120 not suspense/misc 6999,Recode GL from 6999 to 6120,Engineering Finance
+exc_04,txn_1007,medium,Missing hotel receipt before month-end close,Request folio receipt,Sales Ops
