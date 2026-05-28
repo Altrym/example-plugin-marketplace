@@ -106,8 +106,20 @@ async function createPluginVersion(pluginId, manifest, telvineManifest) {
     version: manifest.version || telvineManifest.version || "0.1.0",
     manifest_format: "codex",
     manifest_hash: sha256(JSON.stringify(manifest)),
+    marketplace_published_git_url: marketplaceGitUrl(manifest),
     components: inventoryFromTelvine(telvineManifest),
   });
+}
+
+function marketplaceGitUrl(manifest) {
+  if (process.env.TELVINE_MARKETPLACE_GIT_URL) return process.env.TELVINE_MARKETPLACE_GIT_URL;
+  const repo = manifest.repository;
+  if (typeof repo !== "string" || !repo) return null;
+  const cleanRepo = repo.replace(/^git\+/, "").replace(/\.git$/, "");
+  if (/^https:\/\/github\.com\/[^/]+\/[^/]+$/i.test(cleanRepo)) {
+    return `${cleanRepo}/tree/main/plugins/${manifest.name}`;
+  }
+  return cleanRepo;
 }
 
 async function createSkillVersion(skillId, manifest, skillFile) {

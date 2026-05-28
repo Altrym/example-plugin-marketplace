@@ -13,13 +13,12 @@
     "completion_rate": 0.955,
     "declared_components_by_type": {
       "skill": 1,
-      "browser_workflow": 1,
-      "asset": 1,
-      "runtime_component": 1
+      "runtime_component": 2,
+      "asset": 1
     },
     "observed_components_by_type": {
       "skill": 1,
-      "browser_workflow": 1,
+      "runtime_component": 1,
       "asset": 1
     }
   },
@@ -38,7 +37,7 @@
       "count": 128
     },
     {
-      "step": "configured_connector",
+      "step": "configured_browser_flow",
       "count": 101
     },
     {

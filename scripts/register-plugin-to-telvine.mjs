@@ -100,6 +100,11 @@ function fallbackComponents(skillFiles) {
   return components;
 }
 
+function telvineComponentType(componentType) {
+  if (componentType === "browser_workflow") return "runtime_component";
+  return componentType;
+}
+
 async function upsertPlugin(slug, manifest) {
   const existing = await api("GET", "/v1/plugins");
   const found = existing.data.find((plugin) => plugin.slug === slug);
@@ -134,8 +139,21 @@ async function createPluginVersion(pluginId, manifest, components) {
     version: manifest.version || "0.1.0",
     manifest_format: platform,
     manifest_hash: sha256(JSON.stringify(manifest)),
+    marketplace_published_git_url: marketplaceGitUrl(manifest),
     components,
   });
+}
+
+function marketplaceGitUrl(manifest) {
+  if (process.env.TELVINE_MARKETPLACE_GIT_URL) return process.env.TELVINE_MARKETPLACE_GIT_URL;
+  const repo = manifest.repository;
+  if (typeof repo !== "string" || !repo) return null;
+  const cleanRepo = repo.replace(/^git\+/, "").replace(/\.git$/, "");
+  const relativePluginPath = path.relative(repoRoot, pluginDir).replaceAll(path.sep, "/");
+  if (/^https:\/\/github\.com\/[^/]+\/[^/]+$/i.test(cleanRepo) && relativePluginPath && !relativePluginPath.startsWith("..")) {
+    return `${cleanRepo}/tree/main/${relativePluginPath}`;
+  }
+  return cleanRepo;
 }
 
 async function createSkillVersion(skillId, manifest, skillFile) {
@@ -176,7 +194,7 @@ const telvineManifest = fs.existsSync(telvinePath) ? json(telvinePath) : null;
 const slug = manifest.name || path.basename(pluginDir);
 const skillFiles = findSkillFiles();
 const components = telvineManifest?.components?.map((component) => ({
-  component_type: component.component_type,
+  component_type: telvineComponentType(component.component_type),
   name: component.name,
   telemetry_mode: component.telemetry_mode,
 })) || fallbackComponents(skillFiles);
