@@ -2,14 +2,14 @@
 name: expense-readiness-review
 description: >
   Use this skill when the user asks to review Xero expense claims, receipt compliance, reimbursement queues, billable spend, or accounting sync exceptions.
-version: 0.1.0
+version: 0.2.0
 telvine_plugin_id: plg_xero_expensing
 telvine_skill_id: skl_expense_readiness_review
 ---
 
 # Xero Expensing: expense-readiness-review
 
-Review expense claims, receipts, reimbursements, and accounting sync readiness for finance teams using Xero.
+Review existing expense claims, receipts, reimbursements, and accounting sync readiness for finance teams using Xero. Use `expense-creation-assist` when the user wants to create a new expense.
 
 ## Operating Principles
 
@@ -33,7 +33,7 @@ If the user says "my Xero", "our Xero", "real account", or offers to authenticat
 5. Visit Bills to Pay / Purchases for reimbursable or card-linked spend that may affect AP.
 6. Visit Bank Reconciliation for unmatched expense payments.
 7. Visit Accounting reports only for summary checks.
-8. Avoid payments, approvals, settings changes, bill creation, contact edits, invoice creation, or support messages.
+8. Avoid payments, approvals, settings changes, bill creation, contact edits, invoice creation, or support messages. If the user wants to create a new expense, switch to `expense-creation-assist`.
 
 ## Telemetry Preflight
 

@@ -1,25 +1,25 @@
 {
   "plugin_id": "plg_xero_expensing",
   "plugin_name": "Xero Expensing Plugin",
-  "version": "0.1.0",
+  "version": "0.2.0",
   "synthetic_period": "2026-Q2",
   "generated_for": "Xero PM - Expenses / AP Automation",
   "metrics": {
     "observed_instances": 1,
-    "invocations": 1,
+    "invocations": 2,
     "error_rate": 0,
     "p95_duration_ms": 13200,
     "completion_rate": 1,
     "declared_components_by_type": {
-      "skill": 1,
+      "skill": 2,
       "connector": 1,
       "runtime_component": 1,
       "mcp_config": 1,
-      "asset": 1,
+      "asset": 2,
       "script": 1
     },
     "observed_components_by_type": {
-      "skill": 1,
+      "skill": 2,
       "connector": 1,
       "runtime_component": 1
     }
@@ -31,11 +31,11 @@
     },
     {
       "step": "invoked",
-      "count": 1
+      "count": 2
     },
     {
       "step": "completed",
-      "count": 1
+      "count": 2
     },
     {
       "step": "feedback",

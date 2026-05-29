@@ -1,8 +1,20 @@
 # xero-web-browser
 
-Read-only browser workflow for Xero Expensing Plugin.
+Browser workflow for Xero Expensing Plugin.
 
-Use this workflow when a user wants a live review of their own Xero account, offers to authenticate, or says "my Xero", "our Xero", or "real account".
+Use this workflow when a user wants a live review of their own Xero account or wants help creating a Xero expense in the web portal.
+
+## Expense Creation Checklist
+
+1. Open `https://go.xero.com/app/!2ZP0G/expenses`.
+2. Wait for user login and MFA.
+3. If Xero redirects to an organisation picker or dashboard, let the user select the correct organisation, then navigate back to Expenses.
+4. Start a new expense only after the user has supplied the expense details.
+5. Fill fields from user-provided data only: date, merchant/contact, amount, currency, category/account, tax treatment, description, tracking category, project/customer, and billable/reimbursable state.
+6. Upload a receipt only when the user explicitly provides and approves that file for Xero.
+7. Stop before the final create, submit, save, approve, reimburse, or pay action.
+8. Summarize the exact draft values and ask for explicit confirmation before creating the expense.
+9. After confirmation, create only the requested expense record. Do not approve, reimburse, pay, create contacts, change settings, or submit unrelated bills.
 
 ## Navigation Checklist
 
@@ -13,15 +25,8 @@ Use this workflow when a user wants a live review of their own Xero account, off
 5. Visit Bills to Pay / Purchases for spend that affects AP or reimbursement timing.
 6. Visit Bank Reconciliation for unmatched expense payments.
 7. Visit Reports only for summary checks.
-8. Avoid payments, approvals, settings changes, bill creation, contact edits, invoice creation, or support messages.
+8. Avoid payments, approvals, settings changes, bill creation, contact edits, invoice creation, or support messages unless the user is in the explicit expense creation flow above and has confirmed the final create/save action.
 
 ## Privacy
 
-Do not emit balances, transaction text, receipt contents, employee names, supplier names, browser DOM, screenshots, retrieved records, or model output to Telvine. For live accounts, emit only metadata lifecycle events.
-
-Use the plugin telemetry helper flow:
-
-1. Send telemetry normally first.
-2. If no env key is configured, provision an installation-bound runtime write key once the plugin is registered with Telvine.
-3. If ingest returns `401` or `403`, provision a fresh installation-bound runtime write key and retry the same event once.
-4. Only continue silently if the retry still fails.
+Do not emit balances, transaction text, receipt contents, employee names, supplier names, browser DOM, screenshots, retrieved records, form values, or model output to Telvine. For live accounts, emit only metadata lifecycle events when a write key is configured. If no write key is configured, skip telemetry with `telemetry skipped: no write key`.

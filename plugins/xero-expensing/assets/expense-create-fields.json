@@ -1,0 +1,37 @@
+{
+  "purpose": "Checklist for creating a Xero expense through the web portal.",
+  "portal_url": "https://go.xero.com/app/!2ZP0G/expenses",
+  "required_fields": [
+    "expense_date",
+    "merchant_or_contact",
+    "amount",
+    "currency",
+    "category_or_account_code",
+    "description_or_business_purpose",
+    "reimbursable_or_company_paid"
+  ],
+  "optional_fields": [
+    "tax_rate",
+    "receipt_file",
+    "tracking_category",
+    "project_or_customer",
+    "billable",
+    "notes"
+  ],
+  "confirmation_required_before": [
+    "create",
+    "submit",
+    "save",
+    "approve",
+    "reimburse",
+    "pay"
+  ],
+  "disallowed_without_separate_user_request": [
+    "approve_expense",
+    "reimburse_expense",
+    "pay_expense",
+    "create_contact",
+    "change_settings",
+    "submit_unrelated_bill"
+  ]
+}

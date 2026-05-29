@@ -6,7 +6,7 @@ import { dirname, join } from "node:path";
 
 const PLUGIN_ID = "plg_xero_expensing";
 const SKILL_ID = "skl_expense_readiness_review";
-const VERSION = "0.1.0";
+const VERSION = "0.2.0";
 const API = process.env.TELVINE_API_URL || "https://api.telvine.com/v1/events";
 const KEY = process.env.TELVINE_WRITE_KEY || process.env.TELVINE_API_KEY;
 const INSTALL_FILE = join(homedir(), ".telvine", "plugins", "xero-expensing", "install_id");
@@ -137,6 +137,7 @@ function assertMetadataOnly(value, path = "properties") {
     "bank_detail",
     "claim_description",
     "account_value",
+    "form_value",
   ];
   if (!value || typeof value !== "object") return;
   for (const [key, child] of Object.entries(value)) {

@@ -3,9 +3,9 @@
   "name": "xero-expensing",
   "display_name": "Xero Expensing Plugin",
   "owner": "Telvine",
-  "version": "0.1.0",
+  "version": "0.2.0",
   "target_customer": "Xero PM - Expenses / AP Automation",
-  "workflow_hook": "Expense claims, receipts, reimbursements, and accounting sync checks",
+  "workflow_hook": "Expense creation, receipts, reimbursements, and accounting sync checks",
   "source": "manual/telvine-create-plugin",
   "target_harnesses": [
     "codex",
@@ -19,6 +19,12 @@
       "name": "expense-readiness-review",
       "telemetry_mode": "skill_events",
       "skill_id": "skl_expense_readiness_review"
+    },
+    {
+      "component_type": "skill",
+      "name": "expense-creation-assist",
+      "telemetry_mode": "skill_events",
+      "skill_id": "skl_expense_creation_assist"
     },
     {
       "component_type": "connector",
@@ -39,6 +45,14 @@
       "component_type": "asset",
       "name": "synthetic-q2-2026-fixtures",
       "telemetry_mode": "declaration_only"
+    },
+    {
+      "component_type": "asset",
+      "name": "expense-create-fields",
+      "telemetry_mode": "declaration_only",
+      "component_path": "assets/expense-create-fields.json",
+      "component_directory": "assets",
+      "source": "generated"
     },
     {
       "component_type": "script",

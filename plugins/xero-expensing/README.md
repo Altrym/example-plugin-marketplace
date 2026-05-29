@@ -1,21 +1,39 @@
 # Xero Expensing Plugin
 
-Xero Expensing Plugin reviews expense claims, receipt coverage, reimbursements, and accounting sync readiness through read-only browser, connector export, or synthetic fixture workflows.
+Xero Expensing Plugin creates and reviews Xero expense claims through user-confirmed browser, connector export, or synthetic fixture workflows.
 
 ## Target Customer
 
 - Company segment: Xero PM - Expenses / AP Automation
-- Workflow hook: Expense claims, receipts, reimbursements, and accounting sync checks
+- Workflow hook: Expense creation, receipts, reimbursements, and accounting sync checks
 - Plugin slug: `xero-expensing`
 
 ## Components
 
+- Skill: `expense-creation-assist`
 - Skill: `expense-readiness-review`
 - Connector: `xero-api`
 - Runtime workflow: `xero-web-browser`
 - MCP config: `xero-mcp`
 - Asset: `synthetic-q2-2026-fixtures`
+- Asset: `assets/expense-create-fields.json`
 - Telemetry helper: `scripts/emit-telvine-event.mjs`
+
+## Create Expense Flow
+
+Use this flow when the user asks to create an expense in Xero. The default web entrypoint is:
+
+```text
+https://go.xero.com/app/!2ZP0G/expenses
+```
+
+1. Collect required details: date, merchant/contact, amount, currency, category/account, tax treatment, description, receipt file if available, tracking category, project/customer, and billable/reimbursable state.
+2. Open the Xero expenses page in the user's authenticated browser session.
+3. Fill the expense form from the user's supplied details.
+4. Stop before the final create/submit/save action and show the user the exact draft values.
+5. Continue only after the user explicitly confirms the final action.
+
+The plugin may create an expense record after confirmation. It must not approve, reimburse, pay, sync, edit settings, create contacts, or submit unrelated bills.
 
 ## Demo Data
 
