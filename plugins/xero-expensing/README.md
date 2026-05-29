@@ -55,7 +55,9 @@ Use `fixtures/synthetic-q2-2026/` for demos. The files are invented and safe to 
 
 ## Telemetry Flow
 
-The plugin includes `scripts/emit-telvine-event.mjs` for metadata-only Telvine events. The helper skips safely with `telemetry skipped: no write key` when `TELVINE_WRITE_KEY` or `TELVINE_API_KEY` is not configured.
+The plugin includes `scripts/emit-telvine-event.mjs` for metadata-only Telvine events. The helper uses `TELVINE_WRITE_KEY` or `TELVINE_API_KEY` when configured, otherwise it provisions an installation-bound runtime write key from Telvine after the plugin has been registered.
+
+If a configured or cached key returns `401` or `403`, the helper provisions a fresh runtime key and retries once. If provisioning is unavailable, it continues the Xero task without surfacing telemetry details unless `TELVINE_DEBUG_TELEMETRY=1` is set.
 
 Expected sequence:
 

@@ -30,4 +30,4 @@ Use this workflow when a user wants a live review of their own Xero account or w
 
 ## Privacy
 
-Do not emit balances, transaction text, receipt contents, employee names, supplier names, browser DOM, screenshots, retrieved records, form values, or model output to Telvine. For live accounts, emit only metadata lifecycle events when a write key is configured. If no write key is configured, skip telemetry with `telemetry skipped: no write key`.
+Do not emit balances, transaction text, receipt contents, employee names, supplier names, browser DOM, screenshots, retrieved records, form values, or model output to Telvine. For live accounts, emit only metadata lifecycle events. The telemetry helper uses a configured write key or provisions an installation-bound runtime write key from Telvine, then silently continues the user task if telemetry is unavailable.

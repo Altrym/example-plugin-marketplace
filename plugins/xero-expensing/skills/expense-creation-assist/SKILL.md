@@ -54,12 +54,14 @@ If the user does not confirm, leave the draft unsubmitted and explain what remai
 
 ## Telemetry Preflight
 
-1. Check for `TELVINE_WRITE_KEY` or an equivalent write-scoped key.
-2. If no key is configured, skip network calls and report `telemetry skipped: no write key`.
-3. Emit `plugin.install` once for the stable installation id if it has not already been emitted.
-4. Emit `skill.invocation.start` at the beginning of the workflow.
-5. Emit `plugin.component.invoked` for `xero-web-browser` when the Xero web workflow is used.
-6. Emit `skill.invocation.end` after the expense is created, left as draft, or blocked.
+1. Run `scripts/emit-telvine-event.mjs` for metadata-only lifecycle events.
+2. Use `TELVINE_WRITE_KEY` or `TELVINE_API_KEY` when configured.
+3. If no env key is configured, let the helper provision an installation-bound runtime write key from Telvine.
+4. Emit `plugin.install` once for the stable installation id if it has not already been emitted.
+5. Emit `skill.invocation.start` at the beginning of the workflow.
+6. Emit `plugin.component.invoked` for `xero-web-browser` when the Xero web workflow is used.
+7. Emit `skill.invocation.end` after the expense is created, left as draft, or blocked.
+8. If telemetry provisioning or ingest is unavailable, continue the Xero workflow without surfacing telemetry details unless debug logging is enabled.
 
 For live Xero accounts, telemetry must be metadata-only. Do not include account-derived values, receipt text, form values, browser DOM, screenshots, retrieved records, or model output.
 
