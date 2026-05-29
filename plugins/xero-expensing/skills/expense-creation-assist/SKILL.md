@@ -19,6 +19,7 @@ Create a Xero expense record from user-supplied details through the Xero web por
 - After confirmation, create only the requested expense record.
 - Never approve, reimburse, pay, sync unrelated records, change settings, create contacts, submit bills, or send support messages.
 - Keep Telvine telemetry metadata-only: no prompts, receipt contents, claim descriptions, employee names, supplier names, form values, browser DOM, screenshots, connector payloads, tool arguments, or model output.
+- Ask one short feedback question at the end when the workflow created an expense, prevented a duplicate, or the user declined creation after a recommendation.
 
 ## Required User Inputs
 
@@ -50,7 +51,18 @@ Use `assets/expense-create-fields.json` as the field checklist.
 10. Ask the user for explicit confirmation to create the expense.
 11. If confirmed, create the expense and report the visible confirmation or resulting status.
 
-If the user does not confirm, leave the draft unsubmitted and explain what remains open.
+If the user does not confirm, leave the draft unsubmitted and explain what remains open. If the user declines because an existing claim appears to match, treat that as a useful completion, not a failure.
+
+## Duplicate Detection And Declines
+
+When an existing Xero claim appears to match the user's requested expense:
+
+1. Tell the user that the existing claim appears to match, using only a minimal summary.
+2. Ask whether they want to create another expense anyway or use the existing claim.
+3. If the user says no, no thanks, cancel, leave it, or similar, do not create another expense.
+4. Emit `skill.invocation.end` with `outcome=completed`, `completion_quality=full`, and `downstream_action=none`.
+5. Ask one concise feedback question: "Was this duplicate check useful? Reply 1-5."
+6. If the user replies with a rating, emit `feedback.submitted` with the rating, `task_category=automation`, and the current session id. Do not send the user's free-text response or any Xero/account details.
 
 ## Telemetry Preflight
 
@@ -61,7 +73,9 @@ If the user does not confirm, leave the draft unsubmitted and explain what remai
 5. Emit `skill.invocation.start` at the beginning of the workflow.
 6. Emit `plugin.component.invoked` for `xero-web-browser` when the Xero web workflow is used.
 7. Emit `skill.invocation.end` after the expense is created, left as draft, or blocked.
-8. If telemetry provisioning or ingest is unavailable, continue the Xero workflow without surfacing telemetry details unless debug logging is enabled.
+8. Ask for feedback after a created expense, duplicate prevention, or user-declined creation.
+9. Emit `feedback.submitted` when the user gives a rating.
+10. If telemetry provisioning or ingest is unavailable, continue the Xero workflow without surfacing telemetry details unless debug logging is enabled.
 
 For live Xero accounts, telemetry must be metadata-only. Do not include account-derived values, receipt text, form values, browser DOM, screenshots, retrieved records, or model output.
 
@@ -70,6 +84,7 @@ For live Xero accounts, telemetry must be metadata-only. Do not include account-
 - Missing-input checklist, if any required fields are absent
 - Draft expense summary before final confirmation
 - Final result: created, left as draft, or blocked
+- One short feedback question after completion or useful cancellation
 - Any visible Xero status or confirmation text, paraphrased without sensitive details
 - Telvine event checklist
 
@@ -79,3 +94,4 @@ For live Xero accounts, telemetry must be metadata-only. Do not include account-
 - `plugin.component.invoked` for `xero-web-browser` when the browser workflow is used.
 - `skill.invocation.end` with outcome, duration, tool-call count, completion quality, artifact type, and downstream action.
 - `plugin.component.error` or `skill.invocation.error` if Xero access, required fields, upload, or confirmation blocks the flow.
+- `feedback.submitted` when the user replies to the post-task feedback question. Include only rating, task category, and session id.

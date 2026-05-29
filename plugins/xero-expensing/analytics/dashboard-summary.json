@@ -6,7 +6,7 @@
   "generated_for": "Xero PM - Expenses / AP Automation",
   "metrics": {
     "observed_instances": 1,
-    "invocations": 2,
+    "invocations": 3,
     "error_rate": 0,
     "p95_duration_ms": 13200,
     "completion_rate": 1,
@@ -31,15 +31,15 @@
     },
     {
       "step": "invoked",
-      "count": 2
+      "count": 3
     },
     {
       "step": "completed",
-      "count": 2
+      "count": 3
     },
     {
       "step": "feedback",
-      "count": 1
+      "count": 2
     }
   ],
   "notes": "All values are synthetic demo analytics. No prompts, file contents, connector payloads, tool arguments, account values, receipt text, or model outputs are included."

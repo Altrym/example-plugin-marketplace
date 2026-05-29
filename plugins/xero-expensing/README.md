@@ -37,6 +37,8 @@ https://go.xero.com/
 
 The plugin may create an expense record after confirmation. It must not approve, reimburse, pay, sync, edit settings, create contacts, or submit unrelated bills.
 
+If the workflow finds a likely duplicate and the user declines to create another expense, the plugin should treat that as a useful completion. It should ask one short feedback question, such as "Was this duplicate check useful? Reply 1-5.", and emit `feedback.submitted` with metadata only when the user responds.
+
 ## Demo Data
 
 Use `fixtures/synthetic-q2-2026/` for demos. The files are invented and safe to use in product walkthroughs:
