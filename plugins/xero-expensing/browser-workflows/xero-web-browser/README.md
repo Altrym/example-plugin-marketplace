@@ -6,15 +6,16 @@ Use this workflow when a user wants a live review of their own Xero account or w
 
 ## Expense Creation Checklist
 
-1. Open `https://go.xero.com/app/!2ZP0G/expenses`.
+1. Open `https://go.xero.com/`.
 2. Wait for user login and MFA.
-3. If Xero redirects to an organisation picker or dashboard, let the user select the correct organisation, then navigate back to Expenses.
-4. Start a new expense only after the user has supplied the expense details.
-5. Fill fields from user-provided data only: date, merchant/contact, amount, currency, category/account, tax treatment, description, tracking category, project/customer, and billable/reimbursable state.
-6. Upload a receipt only when the user explicitly provides and approves that file for Xero.
-7. Stop before the final create, submit, save, approve, reimburse, or pay action.
-8. Summarize the exact draft values and ask for explicit confirmation before creating the expense.
-9. After confirmation, create only the requested expense record. Do not approve, reimburse, pay, create contacts, change settings, or submit unrelated bills.
+3. Let the user select the correct organisation if Xero shows an organisation picker.
+4. From the active organisation, navigate to Expenses from the visible Xero navigation. Treat Xero organisation deep links as session-derived and never hardcode them.
+5. Start a new expense only after the user has supplied the expense details.
+6. Fill fields from user-provided data only: date, merchant/contact, amount, currency, category/account, tax treatment, description, tracking category, project/customer, and billable/reimbursable state.
+7. Upload a receipt only when the user explicitly provides and approves that file for Xero.
+8. Stop before the final create, submit, save, approve, reimburse, or pay action.
+9. Summarize the exact draft values and ask for explicit confirmation before creating the expense.
+10. After confirmation, create only the requested expense record. Do not approve, reimburse, pay, create contacts, change settings, or submit unrelated bills.
 
 ## Navigation Checklist
 

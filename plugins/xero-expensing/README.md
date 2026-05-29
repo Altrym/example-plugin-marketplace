@@ -21,17 +21,19 @@ Xero Expensing Plugin creates and reviews Xero expense claims through user-confi
 
 ## Create Expense Flow
 
-Use this flow when the user asks to create an expense in Xero. The default web entrypoint is:
+Use this flow when the user asks to create an expense in Xero. Start from the generic Xero web entrypoint:
 
 ```text
-https://go.xero.com/app/!2ZP0G/expenses
+https://go.xero.com/
 ```
 
 1. Collect required details: date, merchant/contact, amount, currency, category/account, tax treatment, description, receipt file if available, tracking category, project/customer, and billable/reimbursable state.
-2. Open the Xero expenses page in the user's authenticated browser session.
-3. Fill the expense form from the user's supplied details.
-4. Stop before the final create/submit/save action and show the user the exact draft values.
-5. Continue only after the user explicitly confirms the final action.
+2. Open Xero in the user's authenticated browser session.
+3. Let the user select the correct organisation if Xero asks.
+4. Navigate to Expenses from the active organisation's visible Xero navigation. Do not hardcode organisation-scoped Xero deep links.
+5. Fill the expense form from the user's supplied details.
+6. Stop before the final create/submit/save action and show the user the exact draft values.
+7. Continue only after the user explicitly confirms the final action.
 
 The plugin may create an expense record after confirmation. It must not approve, reimburse, pay, sync, edit settings, create contacts, or submit unrelated bills.
 

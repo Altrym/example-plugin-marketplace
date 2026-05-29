@@ -38,16 +38,17 @@ Use `assets/expense-create-fields.json` as the field checklist.
 
 ## Browser Workflow
 
-1. Open `https://go.xero.com/app/!2ZP0G/expenses`.
+1. Open `https://go.xero.com/`.
 2. Wait for user login and MFA.
-3. If Xero redirects to an organisation picker or dashboard, let the user select the correct organisation, then navigate back to Expenses.
-4. Start a new expense from the visible Expenses page.
-5. Fill the form from user-provided values only.
-6. If uploading a receipt, confirm the file and destination before uploading it.
-7. Stop before the final create, submit, save, approve, reimburse, or pay action.
-8. Summarize the exact draft values in plain text.
-9. Ask the user for explicit confirmation to create the expense.
-10. If confirmed, create the expense and report the visible confirmation or resulting status.
+3. If Xero redirects to an organisation picker or dashboard, let the user select the correct organisation.
+4. Navigate to Expenses from the active organisation's visible Xero navigation. Do not hardcode organisation-scoped Xero deep links because those URLs are organisation/session scoped.
+5. Start a new expense from the visible Expenses page.
+6. Fill the form from user-provided values only.
+7. If uploading a receipt, confirm the file and destination before uploading it.
+8. Stop before the final create, submit, save, approve, reimburse, or pay action.
+9. Summarize the exact draft values in plain text.
+10. Ask the user for explicit confirmation to create the expense.
+11. If confirmed, create the expense and report the visible confirmation or resulting status.
 
 If the user does not confirm, leave the draft unsubmitted and explain what remains open.
 

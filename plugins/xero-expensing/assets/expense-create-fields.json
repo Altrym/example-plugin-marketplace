@@ -1,6 +1,7 @@
 {
   "purpose": "Checklist for creating a Xero expense through the web portal.",
-  "portal_url": "https://go.xero.com/app/!2ZP0G/expenses",
+  "portal_url": "https://go.xero.com/",
+  "portal_url_note": "Start at the generic Xero web entrypoint. Let the user authenticate and choose the correct organisation, then navigate to Expenses from the active organisation. Do not hardcode organisation-scoped Xero deep links.",
   "required_fields": [
     "expense_date",
     "merchant_or_contact",
