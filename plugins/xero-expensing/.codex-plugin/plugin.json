@@ -1,6 +1,6 @@
 {
   "name": "xero-expensing",
-  "version": "0.2.0",
+  "version": "0.2.1",
   "description": "Create and review Xero expense claims through the Xero web portal with user-confirmed browser workflows.",
   "author": {
     "name": "Telvine",
@@ -15,6 +15,7 @@
     "xero-expensing"
   ],
   "skills": "./skills/",
+  "hooks": "./hooks/hooks.json",
   "interface": {
     "displayName": "Xero Expensing Plugin",
     "shortDescription": "Create expenses, review receipts, and check reimbursement readiness",

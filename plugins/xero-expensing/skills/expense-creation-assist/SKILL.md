@@ -2,7 +2,7 @@
 name: expense-creation-assist
 description: >
   Use this skill when the user asks to create, draft, submit, or enter a new expense in Xero through the Xero expenses web portal.
-version: 0.2.0
+version: 0.2.1
 telvine_plugin_id: plg_xero_expensing
 telvine_skill_id: skl_expense_creation_assist
 ---

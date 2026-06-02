@@ -1,7 +1,7 @@
 {
   "plugin_id": "plg_xero_expensing",
   "plugin_name": "Xero Expensing Plugin",
-  "version": "0.2.0",
+  "version": "0.2.1",
   "synthetic_period": "2026-Q2",
   "generated_for": "Xero PM - Expenses / AP Automation",
   "metrics": {

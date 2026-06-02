@@ -3,7 +3,7 @@
   "name": "telvine-plugin-builder",
   "display_name": "Telvine Plugin Builder",
   "owner": "Altrym",
-  "version": "0.1.3",
+  "version": "0.1.4",
   "target_customer": "Plugin builders and teams registering plugins with Telvine",
   "workflow_hook": "Create plugin metadata, provider renditions, telemetry fixtures, and Telvine registration",
   "source": "custom/meta-plugin-builder",
@@ -26,6 +26,14 @@
       "component_type": "runtime_component",
       "name": "telvine-registration-helper",
       "telemetry_mode": "component_events"
+    },
+    {
+      "component_type": "hook",
+      "name": "codex-session-start",
+      "telemetry_mode": "component_events",
+      "component_path": "hooks/session-start.mjs",
+      "component_directory": "hooks",
+      "source": "generated"
     },
     {
       "component_type": "script",

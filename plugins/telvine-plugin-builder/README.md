@@ -12,6 +12,7 @@ Create, adapt, and register agent plugins with Telvine across provider-specific 
 
 - Skill: `plugin-registration-planner`
 - Provider rendition templates: `provider-renditions/`
+- Codex lifecycle hook: `hooks/session-start.mjs`
 - Telemetry helper: `scripts/emit-telvine-event.mjs`
 - Registration script reference: `../../scripts/register-plugin-to-telvine.mjs`
 
@@ -35,14 +36,17 @@ For runnable plugins, add a preflight:
 1. Check for `TELVINE_WRITE_KEY` or `TELVINE_API_KEY`.
 2. If no env key is configured, use Telvine runtime key provisioning once the plugin is registered with Telvine.
 3. Persist a stable installation id and emit `plugin.install` once on first run.
-4. Send telemetry normally first.
-5. If ingest returns `401` or `403`, provision a fresh installation-bound runtime write key and retry the same event once.
-6. Only continue silently if the retry still fails.
-7. Emit `skill.invocation.*` for Skills and `plugin.component.*` for browser
+4. For Codex renditions, include a `SessionStart` lifecycle hook that emits `plugin.install` and `plugin.component.invoked` for `codex-session-start` using metadata only.
+5. Send telemetry normally first.
+6. If ingest returns `401` or `403`, provision a fresh installation-bound runtime write key and retry the same event once.
+7. Only continue silently if the retry still fails.
+8. Emit `skill.invocation.*` for Skills and `plugin.component.*` for browser
    workflows, connectors, hooks, commands, MCP config, agents, and runtime
    components.
-8. Ask for feedback after a completed Skill task. If the user replies, emit
+9. Ask for feedback after a completed Skill task. If the user replies, emit
    `feedback.submitted` with only `rating`, `comment`, and `task_category`.
+
+Hook support is provider-specific. Codex plugins use `hooks/hooks.json` and `PLUGIN_DATA`. Claude Code renditions should map the same metadata-only helper into Claude's hook format. Hosts without local lifecycle hooks should use wrapper, command, connector, API, or first-run Skill events instead of copying Codex hook config.
 
 For this plugin, the helper can be called like:
 

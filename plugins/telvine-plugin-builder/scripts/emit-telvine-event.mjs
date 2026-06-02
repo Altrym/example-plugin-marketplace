@@ -6,14 +6,14 @@ import { homedir } from "node:os";
 
 const PLUGIN_SLUG = "telvine-plugin-builder";
 const SKILL_SLUG = "plugin-registration-planner";
-const VERSION = "0.1.3";
+const VERSION = "0.1.4";
 const EVENTS_API = process.env.TELVINE_EVENTS_URL || process.env.TELVINE_API_URL || "https://api.telvine.com/v1/events";
 const RUNTIME_KEY_API = process.env.TELVINE_RUNTIME_KEY_URL || new URL("/v1/runtime/write-key", EVENTS_API).toString();
 const ENV_KEY = process.env.TELVINE_WRITE_KEY || process.env.TELVINE_API_KEY || "";
 const ENV_PLUGIN_ID = process.env.TELVINE_PLUGIN_ID || "";
 const ENV_SKILL_ID = process.env.TELVINE_SKILL_ID || "";
 const DEBUG = process.env.TELVINE_DEBUG_TELEMETRY === "1";
-const PLUGIN_STATE_DIR = join(homedir(), ".telvine", "plugins", PLUGIN_SLUG);
+const PLUGIN_STATE_DIR = process.env.PLUGIN_DATA || process.env.CLAUDE_PLUGIN_DATA || join(homedir(), ".telvine", "plugins", PLUGIN_SLUG);
 const INSTALL_FILE = join(PLUGIN_STATE_DIR, "install_id");
 const RUNTIME_KEY_FILE = join(PLUGIN_STATE_DIR, "runtime_key.json");
 

@@ -15,6 +15,7 @@ Xero Expensing Plugin creates and reviews Xero expense claims through user-confi
 - Connector: `xero-api`
 - Runtime workflow: `xero-web-browser`
 - MCP config: `xero-mcp`
+- Codex lifecycle hook: `hooks/session-start.mjs`
 - Asset: `synthetic-q2-2026-fixtures`
 - Asset: `assets/expense-create-fields.json`
 - Telemetry helper: `scripts/emit-telvine-event.mjs`
@@ -57,17 +58,20 @@ Use `fixtures/synthetic-q2-2026/` for demos. The files are invented and safe to 
 
 ## Telemetry Flow
 
-The plugin includes `scripts/emit-telvine-event.mjs` for metadata-only Telvine events. The helper uses `TELVINE_WRITE_KEY` or `TELVINE_API_KEY` when configured, otherwise it provisions an installation-bound runtime write key from Telvine after the plugin has been registered.
+The plugin includes `scripts/emit-telvine-event.mjs` for metadata-only Telvine events. The helper uses `TELVINE_WRITE_KEY` or `TELVINE_API_KEY` when configured, otherwise it provisions an installation-bound runtime write key from Telvine after the plugin has been registered. In Codex, cached installation state and runtime keys are stored in `PLUGIN_DATA` when available, with a home-directory fallback for older/manual runs.
 
 If a configured or cached key returns `401` or `403`, the helper provisions a fresh runtime key and retries once. If provisioning is unavailable, it continues the Xero task without surfacing telemetry details unless `TELVINE_DEBUG_TELEMETRY=1` is set.
+
+The Codex rendition also bundles `hooks/hooks.json`. Its `SessionStart` hook emits `plugin.install` and a metadata-only `plugin.component.invoked` event for `codex-session-start`. The hook sends only lifecycle fields and hashes for session/model/cwd; it never reads transcripts, prompts, tool inputs, tool outputs, browser text, or Xero account data. Plugin-bundled hooks must still be reviewed and trusted by the user before Codex runs them.
 
 Expected sequence:
 
 1. `plugin.install` once per stable installation id.
-2. `skill.invocation.start`.
-3. `plugin.component.invoked` for `xero-web-browser` when read-only browser or export summaries are loaded.
-4. `skill.invocation.end`.
-5. `feedback.submitted` when the user replies to the post-task feedback request.
+2. `plugin.component.invoked` for `codex-session-start` when the trusted Codex hook runs.
+3. `skill.invocation.start`.
+4. `plugin.component.invoked` for `xero-web-browser` when read-only browser or export summaries are loaded.
+5. `skill.invocation.end`.
+6. `feedback.submitted` when the user replies to the post-task feedback request.
 
 ## Safety
 

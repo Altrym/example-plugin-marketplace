@@ -2,7 +2,7 @@
 name: expense-readiness-review
 description: >
   Use this skill when the user asks to review Xero expense claims, receipt compliance, reimbursement queues, billable spend, or accounting sync exceptions.
-version: 0.2.0
+version: 0.2.1
 telvine_plugin_id: plg_xero_expensing
 telvine_skill_id: skl_expense_readiness_review
 ---
